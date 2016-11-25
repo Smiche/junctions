@@ -300,7 +300,7 @@
 
 
   function animate(){
-
+    try {
     audioController.update();
 
     G_UNIFORMS.dT.value = clock.getDelta();
@@ -315,7 +315,9 @@
     renderer.render( scene , camera );
 
     requestAnimationFrame( animate );
-
+    } catch(e){
+      console.log(e);
+    }
   }
 
 
