@@ -140,7 +140,7 @@
 <script src = "lib/ParticleUtils.js"        ></script>
 <script src = "lib/dat.gui.min.js"          ></script>
 <script src = "lib/OBJLoader.js"            ></script>
-<script src = "lib/Loader.js"               ></script>
+<!-- script src = "lib/Loader.js"               ></script -->
 <script src = "lib/SubdivisionModifier.js"  ></script>
 
 <script src="fonts/helvetiker_bold.typeface.js"></script>
@@ -266,7 +266,7 @@
     window.addEventListener( 'resize', onWindowResize , false );
     window.addEventListener( 'mousemove', onMouseMove , false );
    
-    var g = new THREE.Mesh( new THREE.IcosahedronGeometry( 400 , 7 ) );
+    var g = new THREE.Mesh( new THREE.IcosahedronGeometry( 400 , 2 ) );
     gem = new CurlMesh( 'Space Puppy' , g , {
 
       soul:{

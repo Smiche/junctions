@@ -410,7 +410,7 @@ function Loader(  params ){
 
       var gl = webGL();
       
-      if( !gl )
+      if( false )
         this.addFailure( "WebGL" ,'http://get.webgl.org/');
 
     },
