@@ -85,7 +85,7 @@ function GEM( params ){
     vertexShader:   this.vs, 
     fragmentShader: this.fs,
     transparent:    this.params.transparent,
-    blending:       this.params.blending,
+    //blending:       this.params.blending,
     depthWrite:     this.params.depthWrite,
     side:           this.params.side
 
