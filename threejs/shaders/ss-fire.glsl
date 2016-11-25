@@ -68,7 +68,7 @@ void main(){
 
 
 
-  //gl_FragColor = vec4( og.xyz + sin( timer ) * 1.* vec3( vUv.x , vUv.y , 0. ), 1.  );
-  gl_FragColor = vec4( p , life );
+  gl_FragColor = vec4( og.xyz + sin( timer ) * 1.* vec3( vUv.x , vUv.y , 0. ), 1.  );
+  //gl_FragColor = vec4( p , life );
 
 }
