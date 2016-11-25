@@ -1,0 +1,23 @@
+{
+  "name": "junction",
+  "version": "1.0.0",
+  "description": "junction hackathon project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Smiche/junctions.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Smiche/junctions/issues"
+  },
+  "homepage": "https://github.com/Smiche/junctions#readme",
+  "dependencies": {
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0"
+  }
+}
