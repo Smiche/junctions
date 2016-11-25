@@ -417,7 +417,7 @@ function Loader(  params ){
 
     detectWebAudioAPI: function(){
 
-      if( !window.AudioContext ){
+      if( false){
       //try {
       //  window.AudioContext = window.AudioContext;//||window.webkitAudioContext;
       //}catch(e) {
@@ -446,7 +446,7 @@ function Loader(  params ){
 
       var mobile = detectM();
 
-      if( mobile )
+      if( false )
         this.addFailure( "Non Mobile" , "http://cabbibo.tumblr.com" );
 
     }
