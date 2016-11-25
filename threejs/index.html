@@ -20,144 +20,139 @@
   <meta itemprop="image" src="http://cabbi.bo/image.png">
   <meta property="og:title" content="Cabbi.bo">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="http://cabbi.bo/image.png"/>
+  <meta property="og:image" content="http://cabbi.bo/image.png" />
   <meta property="og:site_name" content="Cabbi.bo">
   <meta property="og:description" content="Long Live Synesthesia">
 
   <style>
-
     @font-face {
       font-family: "GeoSans";
       src: url("lib/GeosansLight.ttf");
     }
-    html{ color:#fff; background:#000; font-family:"GeoSans"; font-size:20px; overflow:hidden }
-
-    #container{
-      width      : 100%;
-      height     : 100%;
-      position   : absolute;
-      top        : 0px;
-      left       : 0px;
-      background : #000;
-    }
-
-    #stats{
-      position  : absolute;
-      bottom    : -35px;
-
-      left      : 0px;
-      z-index   : 999;
-      opacity: .1;
-    }
-
-    a{
+    
+    html {
       color: #fff;
-      position: absolute;
-      z-index: 999;
-    }
-
-    #loading{
-
-      width:100%;
-      text-align:center;
-      padding-top:100px;
-      font-size:25px;
-
+      background: #000;
+      font-family: "GeoSans";
+      font-size: 20px;
+      overflow: hidden
     }
     
-    a{
+    #container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background: #000;
+    }
+    
+    #stats {
+      position: absolute;
+      bottom: -35px;
+      left: 0px;
+      z-index: 999;
+      opacity: .1;
+    }
+    
+    a {
       color: #fff;
       position: absolute;
       z-index: 999;
-      bottom:5px;
-      right:10px;
-      text-decoration:none;
+    }
+    
+    #loading {
+      width: 100%;
+      text-align: center;
+      padding-top: 100px;
+      font-size: 25px;
+    }
+    
+    a {
+      color: #fff;
+      position: absolute;
+      z-index: 999;
+      bottom: 5px;
+      right: 10px;
+      text-decoration: none;
       //underline:none;
-      opacity:.5;
+      opacity: .5;
       font-size: 20px;
     }
-
-    a:hover{
-
-      text-decoration:underline;
-      opacity:1;
-
+    
+    a:hover {
+      text-decoration: underline;
+      opacity: 1;
     }
-
-    h1{
+    
+    h1 {
       background: #000;
       color: #fff;
       margin: 0px;
       padding: 5px;
-      font-size:25px;
-      border-bottom:1px solid white;
-    }
-
-    h1:hover{
-
-      background:#777;
-
-    }
-
-    .active{
-      background:#7ca;
-    }
-
-    .close-button{
-  
-      display:none;
-
-    }
-
-    #GUI{
-
-      position:fixed;
-      right:0px;
-      top:0px;
-      z-index:999;
-
+      font-size: 25px;
+      border-bottom: 1px solid white;
     }
     
-    </style>
+    h1:hover {
+      background: #777;
+    }
+    
+    .active {
+      background: #7ca;
+    }
+    
+    .close-button {
+      display: none;
+    }
+    
+    #GUI {
+      position: fixed;
+      right: 0px;
+      top: 0px;
+      z-index: 999;
+    }
+  </style>
 </head>
+
 <body>
 
   <div id="GUI">
   </div>
 
-    
-<script src = "lib/underscore.js"           ></script>
-<script src = "lib/three.js"                ></script>
-<script src = "lib/jquery.min.js"           ></script>
-<script src = "lib/stats.min.js"            ></script>
-<script src = "lib/TrackballControls.js"    ></script>
-<script src = "lib/ShaderLoader.js"         ></script>
-<script src = "lib/UserAudio.js"            ></script>
-<script src = "lib/Stream.js"               ></script>
-<script src = "lib/AudioController.js"      ></script>
-<script src = "lib/AudioTexture.js"         ></script>
-<script src = "lib/PhysicsRenderer.js"      ></script>
-<script src = "lib/ParticleUtils.js"        ></script>
-<script src = "lib/dat.gui.min.js"          ></script>
-<script src = "lib/OBJLoader.js"            ></script>
-<script src = "lib/Loader.js"               ></script>
-<script src = "lib/SubdivisionModifier.js"  ></script>
 
-<script src="fonts/helvetiker_bold.typeface.js"></script>
-<script src="fonts/helvetiker_regular.typeface.js"></script>
+  <script src="lib/underscore.js"></script>
+  <script src="lib/three.js"></script>
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/stats.min.js"></script>
+  <script src="lib/TrackballControls.js"></script>
+  <script src="lib/ShaderLoader.js"></script>
+  <script src="lib/UserAudio.js"></script>
+  <script src="lib/Stream.js"></script>
+  <script src="lib/AudioController.js"></script>
+  <script src="lib/AudioTexture.js"></script>
+  <script src="lib/PhysicsRenderer.js"></script>
+  <script src="lib/ParticleUtils.js"></script>
+  <script src="lib/dat.gui.min.js"></script>
+  <script src="lib/OBJLoader.js"></script>
+  <script src="lib/Loader.js"></script>
+  <script src="lib/SubdivisionModifier.js"></script>
 
-
-<script src = "GEM.js"                      ></script>
-<script src = "GUI.js"                      ></script>
+  <script src="fonts/helvetiker_bold.typeface.js"></script>
+  <script src="fonts/helvetiker_regular.typeface.js"></script>
 
 
-<script src = "Arrangements.js"             ></script>
+  <script src="GEM.js"></script>
+  <script src="GUI.js"></script>
 
 
-<script src = "Text.js"                     ></script>
-<script src = "CurlMesh.js"                 ></script>
+  <script src="Arrangements.js"></script>
 
-<script>
+
+  <script src="Text.js"></script>
+  <script src="CurlMesh.js"></script>
+
+  <script>
 
   var container , camera, scene, renderer , stats;
 
@@ -316,7 +311,20 @@
 
     requestAnimationFrame( animate );
     } catch(e){
-      console.log(e);
+    audioController.update();
+
+    G_UNIFORMS.dT.value = clock.getDelta();
+    G_UNIFORMS.time.value += G_UNIFORMS.dT.value;
+
+    gem.update();
+
+    stats.update();
+
+    controls.update();
+
+    renderer.render( scene , camera );
+
+    requestAnimationFrame( animate );
     }
   }
 
@@ -381,4 +389,5 @@
 
 
 </body>
+
 </html>
