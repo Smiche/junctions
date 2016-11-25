@@ -92,7 +92,7 @@ function GEM( params ){
   });
   
   this.geometry = this.createGeometry();
-
+  this.material.needsUpdate = true;
   if( this.params.type === 'mesh' ){
     this.body = new THREE.Mesh( this.geometry , this.material );
   }else if( this.params.type === 'lines' ){
@@ -203,7 +203,7 @@ GEM.prototype.createOGTexture = function(){
 
   positionsTexture.minFilter = THREE.NearestFilter;
   positionsTexture.magFilter = THREE.NearestFilter;
-  positionsTexture.generateMipmaps = false;
+  positionsTexture.generateMipmaps = true;
   positionsTexture.needsUpdate = true;
 
 
