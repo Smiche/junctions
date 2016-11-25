@@ -259,7 +259,9 @@
     window.addEventListener( 'resize', onWindowResize , false );
     window.addEventListener( 'mousemove', onMouseMove , false );
    
-    var g = new THREE.Mesh( new THREE.IcosahedronGeometry( 400 , 2 ) );
+    var g = new THREE.Mesh( //new THREE.IcosahedronGeometry( 400 , 7 ) 
+   new THREE.SphereGeometry( 400, 128, 128)
+    );
     gem = new CurlMesh( 'Space Puppy' , g , {
 
       soul:{
@@ -295,22 +297,6 @@
 
 
   function animate(){
-    try {
-    audioController.update();
-
-    G_UNIFORMS.dT.value = clock.getDelta();
-    G_UNIFORMS.time.value += G_UNIFORMS.dT.value;
-
-    gem.update();
-
-    stats.update();
-
-    controls.update();
-
-    renderer.render( scene , camera );
-
-    requestAnimationFrame( animate );
-    } catch(e){
     audioController.update();
 
     G_UNIFORMS.dT.value = clock.getDelta();
@@ -326,7 +312,6 @@
 
     requestAnimationFrame( animate );
     }
-  }
 
 
   function onMouseMove(e ){
