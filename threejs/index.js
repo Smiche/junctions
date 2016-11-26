@@ -2,7 +2,7 @@
 WebVRConfig = {
   // Flag to disabled the UI in VR Mode.
   CARDBOARD_UI_DISABLED: false, // Default: false
-
+  PREDICTION_TIME_S: 0.070,
   // Forces availability of VR mode, even for non-mobile devices.
   FORCE_ENABLE_VR: true
 }
@@ -99,7 +99,7 @@ var container , camera, scene, renderer , stats, effect;
 
 
     // Setting up our Renderer
-    renderer = new THREE.WebGLRenderer({ alpha: false, antialias: true });
+    renderer = new THREE.WebGLRenderer({ alpha: false, antialias: false });
     renderer.setClearColor( 0x505050 );
 		renderer.setPixelRatio( window.devicePixelRatio );
     renderer.sortObjects = false;
