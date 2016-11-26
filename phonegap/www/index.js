@@ -177,13 +177,14 @@ function init() {
   }
 
 }
+var accelListener;
 
 function displayReady() {
   onDeviceReady();
   // device APIs are available
   //
   function onDeviceReady() {
-    navigator.accelerometer.watchAcceleration(onSuccess, onError, {frequency: 20});
+   accelListener = navigator.accelerometer.watchAcceleration(onSuccess, onError, {frequency: 20});
   }
 
   var onError = function(err){
