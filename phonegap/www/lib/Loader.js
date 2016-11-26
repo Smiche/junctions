@@ -6,7 +6,7 @@ function Loader(  params ){
 
     this.params = _.defaults( params || {}, {
       numberToLoad:   0,
-      loadGif:        "img/loadGif.gif",
+      loadGif:        "img/loadJpg.jpg",
       videoWidth: 500,
       videoHeight: 281,
       neededTech:     ['webGL','audio','mobile']

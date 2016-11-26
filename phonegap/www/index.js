@@ -1,12 +1,10 @@
-
+//config
 WebVRConfig = {
-  // Flag to disabled the UI in VR Mode.
-  CARDBOARD_UI_DISABLED: false, // Default: false
-  //DIRTY_SUBMIT_FRAME_BINDINGS: true,
+  CARDBOARD_UI_DISABLED: false,
   BUFFER_SCALE: 0.5,
-  // Forces availability of VR mode, even for non-mobile devices.
   FORCE_ENABLE_VR: true
 }
+
 var container, camera, scene, renderer, stats, effect;
 var vrDisplay = null;
 var camX = 0, camY = 0, camZ = 0;
@@ -18,35 +16,19 @@ var tv2 = new THREE.Vector3();
 var repelerMeshes = [];
 var repelersHidden = true;
 
-
 var REPELERS = [];
 
-
-
-// TODO: make into loader
 var loaded = 0;
 var neededToLoad = 1;
 
-
 var loader = new Loader();
-loader.liftCurtain();
+setTimeout(function () {
+  loader.liftCurtain();
+}, 3000);
 
 var clock = new THREE.Clock();
-
 var audioController = new AudioController();
-//audioController.mute.gain.value = 0;
-
 var stream = new Stream('audio/Nostrand.mp3', audioController);
-//stream.onStreamCreated = function(){
-/// onLoad();
-// }
-/* var userAudio = new UserAudio( audioController );
-  userAudio.onStreamCreated = function(){
-
-    console.log('asds');
-    onLoad();
-
-  }*/
 var shaders = new ShaderLoader('shaders');
 
 shaders.load('ss-fire', 'fire', 'simulation');
@@ -60,7 +42,6 @@ shaders.shaderSetLoaded = function () {
 }
 
 var G_UNIFORMS = {
-
   dT: { type: "f", value: 0 },
   time: { type: "f", value: 0 },
   t_audio: { type: "t", value: audioController.texture },
@@ -115,29 +96,16 @@ function init() {
   container.appendChild(renderer.domElement);
   renderer.domElement.style.background = "#000";
 
-  /* //RIP CONTROLS */
-  /*
-  controls = new THREE.TrackballControls(camera, renderer.domElement);
-  controls.minDistance = 1;
-  controls.maxDistance = 3000;
-  */
+
   controls = new THREE.DeviceOrientationControls(camera);
-  //controls = new THREE.VRControls(camera);
-  console.log(controls);
   effect = new THREE.VREffect(renderer);
 
-
-  // Making sure our renderer is always the right size
   window.addEventListener('resize', onWindowResize, false);
-  //window.addEventListener( 'mousemove', onMouseMove , false );
 
-  var g = new THREE.Mesh( //new THREE.IcosahedronGeometry( 400 , 7 ) 
-    new THREE.SphereGeometry(1200, 90, 90)
-  );
+  var g = new THREE.Mesh(new THREE.SphereGeometry(1200, 90, 90));
   gem = new CurlMesh('Space Puppy', g, {
 
     soul: {
-
       noiseSize: { type: "f", value: .001, constraints: [.0001, .01] },
       noiseVariation: { type: "f", value: .8, constraints: [.01, 1.] },
       dampening: { type: "f", value: .85, constraints: [.8, .999] },
@@ -166,123 +134,58 @@ function init() {
   gem.toggle();
 
   if (navigator.getVRDisplays) {
-    navigator.getVRDisplays()
-						.then(function (displays) {
-        console.log(displays);
+    navigator.getVRDisplays().then(function (displays) {
         vrDisplay = displays[0];
-
-        // displayReady();
-
-        // controls.setVRDisplay(displays[0]);
         vrDisplay.requestPresent([{ source: renderer.domElement }]);
-        setTimeout(function () { vrDisplay.requestPresent([{ source: renderer.domElement }]); }, 3000);
+
         vrDisplay.requestAnimationFrame(animate);
 						})
 						.catch(function () {
-        // no displays
         console.log('NO DISPLAYS!');
 						});
-				//	document.body.appendChild( WEBVR.getButton( effect ) );
-  }
-
-}
-var accelListener;
-
-function displayReady() {
-  onDeviceReady();
-  // device APIs are available
-  //
-  function onDeviceReady() {
-    accelListener = navigator.accelerometer.watchAcceleration(onSuccess, onError, { frequency: 32 });
-  }
-
-  var onError = function (err) {
-    console.log(err);
-  }
-  // onSuccess: Get a snapshot of the current acceleration
-  //
-  function onSuccess(acceleration) {
-    camX = -1 * acceleration.y;
-    camY = -1 * acceleration.x;
-    camZ = acceleration.x;
-    ///vrDisplay.poseSensor_.gyroscope.x = acceleration.x;
-    //vrDisplay.poseSensor_.gyroscope.y = acceleration.y;
-    //vrDisplay.poseSensor_.gyroscope.z = acceleration.z;
-    /*
-    console.log('Acceleration X: ' + acceleration.x + '\n' +
-      'Acceleration Y: ' + acceleration.y + '\n' +
-      'Acceleration Z: ' + acceleration.z + '\n' +
-      'Timestamp: ' + acceleration.timestamp + '\n');*/
   }
 }
 
 function animate() {
-  //controls.target  = new THREE.Vector3(camX,camY,camZ);
-  //console.log(controls);;
-  //console.log(camera);
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
   G_UNIFORMS.time.value += G_UNIFORMS.dT.value;
+
   gem.update();
-
   stats.update();
-
   controls.update();
 
   effect.render(scene, camera);
   vrDisplay.requestAnimationFrame(animate);
 }
 
-
-/*
-  function onMouseMove(e ){
-  }
-*/
-// Resets the renderer to be the proper size
 function onWindowResize() {
-
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 
-
   renderer.setSize(window.innerWidth, window.innerHeight);
-
   var dpr = devicePixelRatio || 1;
-
-  //camUniforms.SS.value.x = window.innerWidth * dpr;
-  //camUniforms.SS.value.y = window.innerHeight * dpr;
-
-
 }
 
 
 function onLoad() {
-
-
   loaded++;
-
-  console.log(loaded);
   if (loaded === neededToLoad) {
 
     if (stream) {
-      // stream = window.URL.createObjectURL(stream);
       stream.play();
     }
-
     init();
-    //goOn();
   }
-
 }
+
 $(document).ready(function () {
   $('#vrbutton').click(function () {
     vrDisplay.requestPresent([{ source: renderer.domElement }]);
   });
 });
-window.activateVR = function () {
-  vrDisplay.requestPresent([{ source: renderer.domElement }]);
-}
+
 function toCart(r, t, p) {
 
   var x = r * (Math.sin(t)) * (Math.cos(p));
