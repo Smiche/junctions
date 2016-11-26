@@ -1,4 +1,5 @@
 
+$(document).ready(function(){
 WebVRConfig = {
   // Flag to disabled the UI in VR Mode.
   CARDBOARD_UI_DISABLED: false, // Default: false
@@ -78,12 +79,14 @@ var container , camera, scene, renderer , stats, effect;
       75 ,
       window.innerWidth / window.innerHeight,
       0.1,
-      10000
+      7000
     );
 
     // placing our camera position so it can see everything
     camera.position.z = 0 ;
-    camera.lookAt( new THREE.Vector3( 1, 1, 0 ));
+    camera.position.y = 0;
+    camera.position.x = 0;
+    camera.lookAt( new THREE.Vector3( 1, 0, 0 ));
 
 
     // Getting the container in the right location
@@ -161,8 +164,7 @@ var container , camera, scene, renderer , stats, effect;
 						.then( function ( displays ) {
               console.log(displays);
 							vrDisplay =  displays[0];
-							//controls.setVRDisplay( displays[ 0 ] );
-              //vrDisplay.requestPresent([{source: renderer.domElement}]);
+              vrDisplay.requestPresent([{source: renderer.domElement}]);
               controls.setVRDisplay( displays[ 0 ] );
               vrDisplay.requestAnimationFrame(animate);
 						} )
@@ -249,3 +251,4 @@ window.activateVR = function(){
     return new THREE.Vector3(x,y,z);
 
   }
+});
