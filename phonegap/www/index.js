@@ -108,11 +108,11 @@ var container , camera, scene, renderer , stats, effect;
     renderer.domElement.style.background="#000";
   
     /* //RIP CONTROLS */
-    /*controls = new THREE.TrackballControls( camera , renderer.domElement);
+    controls = new THREE.TrackballControls( camera , renderer.domElement);
     controls.minDistance = 1;
     controls.maxDistance = 3000;
-    */
-    controls = new THREE.VRControls( camera );
+  
+    //controls = new THREE.VRControls( camera );
 		effect = new THREE.VREffect( renderer );
 
 
@@ -159,8 +159,8 @@ var container , camera, scene, renderer , stats, effect;
 						.then( function ( displays ) {
               console.log(displays);
 							vrDisplay =  displays[0];
-              
-							controls.setVRDisplay( displays[ 0 ] );
+
+							//controls.setVRDisplay( displays[ 0 ] );
               vrDisplay.requestPresent([{source: renderer.domElement}]);
               vrDisplay.requestAnimationFrame(animate);
 						} )
