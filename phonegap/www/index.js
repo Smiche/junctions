@@ -173,9 +173,8 @@ function init() {
 
        // controls.setVRDisplay(displays[0]);
         vrDisplay.requestPresent([{ source: renderer.domElement }]);
-        vrDisplay.requestAnimationFrame(animate);
-        vrDisplay.requestPresent([{ source: renderer.domElement }]);
         setTimeout(function(){vrDisplay.requestPresent([{ source: renderer.domElement }]); }, 3000);
+        vrDisplay.requestAnimationFrame(animate);
 						})
 						.catch(function () {
         // no displays
