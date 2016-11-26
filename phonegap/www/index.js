@@ -9,7 +9,6 @@ curScene = "first";
 var container, camera, scene, renderer, stats, effect;
 var vrDisplay = null;
 var camX = 0, camY = 0, camZ = 0;
-var paused = false;
 
 var gem, gui;
 
@@ -118,26 +117,26 @@ function clearScene() {
 }
 
 function setSecondScene() {
-  paused = true;
   curScene = "second";
   clearScene();
   gem.removeFromScene();
-  var shadowGeo = new THREE.PlaneBufferGeometry(300, 300, 1, 1);
-  var myMesh = new THREE.Mesh(shadowGeo);
-  myMesh.position.x = 0;
-  myMesh.position.y = 0;
-  myMesh.position.z = 1;
-  scene.add(myMesh);
+  var geometry = new THREE.TorusGeometry( 10, 3, 16, 100 );
+  var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+  var torus = new THREE.Mesh( geometry, material );
+
+  torus.position.x = 0;
+  torus.position.y = 0;
+  torus.position.z = 1;
+  scene.add(torus);
   var light = new THREE.AmbientLight(0x404040); // soft white light
   scene.add(light);
 
-  paused = false;
   vrDisplay.requestPresent([{ source: renderer.domElement }]);
   vrDisplay.requestAnimationFrame(animate);
 }
 
+var nextScene = "first";
 function animate() {
-  if (!paused) {
     audioController.update();
 
     G_UNIFORMS.dT.value = clock.getDelta();
@@ -156,8 +155,14 @@ function animate() {
     controls.update();
 
     effect.render(scene, camera);
+    if(nextScene != curScene){
+      if(nextScene == "first")
+      ;
+      else if(nextScene == "second"){
+        setSecondScene();
+      }
+    } else 
     vrDisplay.requestAnimationFrame(animate);
-  }
 }
 
 function onWindowResize() {
@@ -184,7 +189,7 @@ function onLoad() {
 $(document).ready(function () {
   $('#vrbutton').click(function () {
     vrDisplay.requestPresent([{ source: renderer.domElement }]);
-    setSecondScene();
+    nextScene = "second";
   });
 });
 
