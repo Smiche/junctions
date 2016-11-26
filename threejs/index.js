@@ -75,15 +75,15 @@ var container , camera, scene, renderer , stats, effect;
     scene = new THREE.Scene();
     
     camera = new THREE.PerspectiveCamera( 
-      50 ,
+      75 ,
       window.innerWidth / window.innerHeight,
-      1,
-      5000
+      0.1,
+      10000
     );
 
     // placing our camera position so it can see everything
-    camera.position.z = 1000 ;
-    camera.lookAt( new THREE.Vector3() );
+    camera.position.z = 0 ;
+    camera.lookAt( new THREE.Vector3( 1, 1, 0 ));
 
 
     // Getting the container in the right location

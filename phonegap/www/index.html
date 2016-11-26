@@ -1,60 +1,172 @@
-<!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-    <!-- Good default declaration:
-    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-        * Enable inline JS: add 'unsafe-inline' to default-src
-        * Enable eval(): add 'unsafe-eval' to default-src
-    * Create your own at http://cspisawesome.com
-    -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>Hello World</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="twitter:card" content="photo">
+  <meta name="twitter:site" content="@cabbibo">
+  <meta name="twitter:creator" content="@cabbibo">
+  <meta name="twitter:url" content="http://cabbi.bo">
+  <meta name="twitter:title" content="Long Live Synesthesia">
+  <meta name="twitter:description" content="Long Live Synesthesia">
+  <meta name="twitter:creator" content="@cabbibo">
+  <meta name="twitter:image" content="http://cabbi.bo/image.png">
+  <meta name="twitter:image:width" content="1440">
+  <meta name="twitter:image:height" content="900">
+  <meta name="twitter:domain" content="cabbi.bo">
+  <meta itemprop="name" content="Cabbi.bo">
+  <meta itemprop="description" content="Long Live Synesthesia">
+  <meta itemprop="image" src="http://cabbi.bo/image.png">
+  <meta property="og:title" content="Cabbi.bo">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="http://cabbi.bo/image.png" />
+  <meta property="og:site_name" content="Cabbi.bo">
+  <meta property="og:description" content="Long Live Synesthesia">
+
+  <style>
+    @font-face {
+      font-family: "GeoSans";
+      src: url("lib/GeosansLight.ttf");
+    }
+    
+    html {
+      color: #fff;
+      background: #000;
+      font-family: "GeoSans";
+      font-size: 20px;
+      overflow: hidden
+    }
+    
+    #container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background: #000;
+    }
+    
+    #stats {
+      position: absolute;
+      bottom: -35px;
+      left: 0px;
+      z-index: 999;
+      opacity: .1;
+    }
+    
+    a {
+      color: #fff;
+      position: absolute;
+      z-index: 999;
+    }
+    
+    #loading {
+      width: 100%;
+      text-align: center;
+      padding-top: 100px;
+      font-size: 25px;
+    }
+    
+    a {
+      color: #fff;
+      position: absolute;
+      z-index: 999;
+      bottom: 5px;
+      right: 10px;
+      text-decoration: none;
+      //underline:none;
+      opacity: .5;
+      font-size: 20px;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+      opacity: 1;
+    }
+    
+    h1 {
+      background: #000;
+      color: #fff;
+      margin: 0px;
+      padding: 5px;
+      font-size: 25px;
+      border-bottom: 1px solid white;
+    }
+    
+    h1:hover {
+      background: #777;
+    }
+    
+    .active {
+      background: #7ca;
+    }
+    
+    .close-button {
+      display: none;
+    }
+    
+    #GUI {
+      position: fixed;
+      right: 0px;
+      top: 0px;
+      z-index: 999;
+    }
+
+    #vrbutton {
+      position:absolute;
+      z-index:1000;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="app">
-        <h1>PhoneGap</h1>
-        <div id="deviceready" class="blink">
-            <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
-        </div>
-    </div>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>
+
+  <div id="GUI">
+  </div>
+
+
+  <script src="lib/underscore.js"></script>
+  <script src="lib/three.js"></script>
+  <script src="lib/jquery.min.js"></script>
+  <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script -->
+  <script src="lib/stats.min.js"></script>
+  <script src="lib/TrackballControls.js"></script>
+
+  <!-- script src="lib/WebVR.js"></script -->
+  <script src="lib/webvrpolyfill.js"></script>
+  <script src="lib/VREffect.js"></script>
+  <script src="lib/VRControls.js"></script>
+
+  <script src="lib/ShaderLoader.js"></script>
+  <script src="lib/UserAudio.js"></script>
+  <script src="lib/Stream.js"></script>
+  <script src="lib/AudioController.js"></script>
+  <script src="lib/AudioTexture.js"></script>
+  <script src="lib/PhysicsRenderer.js"></script>
+  <script src="lib/ParticleUtils.js"></script>
+  <script src="lib/dat.gui.min.js"></script>
+  <script src="lib/OBJLoader.js"></script>
+  <script src="lib/Loader.js"></script>
+  <script src="lib/SubdivisionModifier.js"></script>
+
+  <!-- script src="fonts/helvetiker_bold.typeface.js"></script>
+  <script src="fonts/helvetiker_regular.typeface.js"></script -->
+
+
+  <script src="GEM.js"></script>
+  <script src="GUI.js"></script>
+
+
+  <script src="Arrangements.js"></script>
+
+
+  <script src="Text.js"></script>
+  <script src="CurlMesh.js"></script>
+
+  <script src="index.js"></script>
+  <button id="vrbutton">ENTER VR</button>
+
 </body>
 
 </html>
