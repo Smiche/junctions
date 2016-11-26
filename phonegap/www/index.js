@@ -179,21 +179,23 @@ function init() {
 }
 
 function displayReady() {
-  document.addEventListener("deviceready", onDeviceReady, false);
-
+  onDeviceReady();
   // device APIs are available
   //
   function onDeviceReady() {
     navigator.accelerometer.watchAcceleration(onSuccess, onError);
   }
 
+  var onError = function(err){
+    console.log(err);
+  }
   // onSuccess: Get a snapshot of the current acceleration
   //
   function onSuccess(acceleration) {
     vrDisplay.poseSensor_.gyroscope.x = acceleration.x;
     vrDisplay.poseSensor_.gyroscope.y = acceleration.y;
     vrDisplay.poseSensor_.gyroscope.z = acceleration.z;
-    
+
     console.log('Acceleration X: ' + acceleration.x + '\n' +
       'Acceleration Y: ' + acceleration.y + '\n' +
       'Acceleration Z: ' + acceleration.z + '\n' +
