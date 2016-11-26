@@ -183,7 +183,7 @@ function displayReady() {
   // device APIs are available
   //
   function onDeviceReady() {
-    navigator.accelerometer.watchAcceleration(onSuccess, onError);
+    navigator.accelerometer.watchAcceleration(onSuccess, onError, {frequency: 20});
   }
 
   var onError = function(err){
