@@ -118,8 +118,8 @@ function init() {
   controls.minDistance = 1;
   controls.maxDistance = 3000;
   */
-
-  controls = new THREE.VRControls(camera);
+  controls = new THREE.DeviceOrientationControls( camera );
+  //controls = new THREE.VRControls(camera);
   console.log(controls);
   effect = new THREE.VREffect(renderer);
 
@@ -170,7 +170,7 @@ function init() {
 
        // displayReady();
 
-        controls.setVRDisplay(displays[0]);
+       // controls.setVRDisplay(displays[0]);
         vrDisplay.requestPresent([{ source: renderer.domElement }]);
         vrDisplay.requestAnimationFrame(animate);
 						})
@@ -214,7 +214,8 @@ function displayReady() {
 
 function animate() {
   //controls.target  = new THREE.Vector3(camX,camY,camZ);
-  console.log(controls);
+  //console.log(controls);;
+  //console.log(camera);
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
