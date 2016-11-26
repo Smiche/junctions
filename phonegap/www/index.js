@@ -2,7 +2,8 @@
 WebVRConfig = {
   // Flag to disabled the UI in VR Mode.
   CARDBOARD_UI_DISABLED: false, // Default: false
-
+ DIRTY_SUBMIT_FRAME_BINDINGS: true,
+ BUFFER_SCALE: 0.7,
   // Forces availability of VR mode, even for non-mobile devices.
   FORCE_ENABLE_VR: true
 }
@@ -76,10 +77,10 @@ function init() {
   scene = new THREE.Scene();
 
   camera = new THREE.PerspectiveCamera(
-    50,
+    60,
     window.innerWidth / window.innerHeight,
-    0.1,
-    10000
+    1,
+    7000
   );
 
   // placing our camera position so it can see everything
@@ -129,7 +130,7 @@ function init() {
   //window.addEventListener( 'mousemove', onMouseMove , false );
 
   var g = new THREE.Mesh( //new THREE.IcosahedronGeometry( 400 , 7 ) 
-    new THREE.SphereGeometry(500, 100, 100)
+    new THREE.SphereGeometry(500, 80, 80)
   );
   gem = new CurlMesh('Space Puppy', g, {
 
