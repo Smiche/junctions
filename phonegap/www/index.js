@@ -129,16 +129,16 @@ function init() {
   //window.addEventListener( 'mousemove', onMouseMove , false );
 
   var g = new THREE.Mesh( //new THREE.IcosahedronGeometry( 400 , 7 ) 
-    new THREE.SphereGeometry(300, 64, 64)
+    new THREE.SphereGeometry(500, 100, 100)
   );
   gem = new CurlMesh('Space Puppy', g, {
 
     soul: {
 
-      noiseSize: { type: "f", value: .003, constraints: [.0001, .01] },
+      noiseSize: { type: "f", value: .002, constraints: [.0001, .01] },
       noiseVariation: { type: "f", value: .8, constraints: [.01, 1.] },
       dampening: { type: "f", value: 1., constraints: [.8, .999] },
-      noisePower: { type: "f", value: 100, constraints: [0, 200.] },
+      noisePower: { type: "f", value: 70, constraints: [0, 200.] },
       returnPower: { type: "f", value: 1., constraints: [.0, 2.] },
       audioVelMultiplier: { type: "f", value: .8, constraints: [0, 1] },
 
