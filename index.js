@@ -3,7 +3,7 @@ var app = express();
 
 
 
-app.use('/', express.static('threejs'));
+app.use('/', express.static('phonegap/www/'));
 //app.use('/new/', express.static('freshjs'));
 
 app.listen(80, function () {
