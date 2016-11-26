@@ -83,8 +83,12 @@ function init() {
   );
 
   // placing our camera position so it can see everything
-  camera.position.z = 1000;
-  camera.lookAt(new THREE.Vector3());
+  camera.position.z = 0;
+  camera.position.y = 0;
+  camera.position.x = 0;
+  camera.position.set(0,0,0);
+  camera.up = new THREE.Vector3(0,0,1);
+  camera.lookAt(new THREE.Vector3(3,3,3));
 
 
   // Getting the container in the right location
