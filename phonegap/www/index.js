@@ -113,13 +113,13 @@ function init() {
   renderer.domElement.style.background = "#000";
 
   /* //RIP CONTROLS */
-
+  /*
   controls = new THREE.TrackballControls(camera, renderer.domElement);
   controls.minDistance = 1;
   controls.maxDistance = 3000;
+  */
 
-
-  //controls = new THREE.VRControls(camera);
+  controls = new THREE.VRControls(camera);
   console.log(controls);
   effect = new THREE.VREffect(renderer);
 
@@ -168,9 +168,9 @@ function init() {
         console.log(displays);
         vrDisplay = displays[0];
 
-        displayReady();
+       // displayReady();
 
-        //controls.setVRDisplay(displays[0]);
+        controls.setVRDisplay(displays[0]);
         vrDisplay.requestPresent([{ source: renderer.domElement }]);
         vrDisplay.requestAnimationFrame(animate);
 						})
@@ -198,9 +198,9 @@ function displayReady() {
   // onSuccess: Get a snapshot of the current acceleration
   //
   function onSuccess(acceleration) {
-    camX = -1 * acceleration.x;
-    camY = -1 * acceleration.y;
-    camZ = acceleration.z;
+    camX = -1 * acceleration.y;
+    camY = -1 * acceleration.x;
+    camZ = acceleration.x;
     ///vrDisplay.poseSensor_.gyroscope.x = acceleration.x;
     //vrDisplay.poseSensor_.gyroscope.y = acceleration.y;
     //vrDisplay.poseSensor_.gyroscope.z = acceleration.z;
@@ -213,7 +213,8 @@ function displayReady() {
 }
 
 function animate() {
-  controls.target  = new THREE.Vector3(camX,camY,camZ);
+  //controls.target  = new THREE.Vector3(camX,camY,camZ);
+  console.log(controls);
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
