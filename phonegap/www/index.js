@@ -225,8 +225,30 @@ $(document).ready(function () {
     //nextScene = "second";
     vrDisplay.requestPresent([{ source: renderer.domElement }]);
   });
+
+  $('#menubutton').click(function () {
+    toggleMenu();
+  });
+
+  $('#scbutton1').click(function () {
+    console.log("call scene one")
+  });
+
+
+    $('#scbutton2').click(function () {
+      console.log("call scene two")
+    });
+
+
+      $('#scbutton3').click(function () {
+        console.log("call scene three")
+      });
 });
 
+  function toggleMenu(){
+    $("#menu").toggle(300);
+
+  }
 function toCart(r, t, p) {
 
   var x = r * (Math.sin(t)) * (Math.cos(p));

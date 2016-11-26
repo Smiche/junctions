@@ -35,6 +35,40 @@ function Loader(  params ){
 
     document.body.appendChild( this.curtain );
 
+    this.menu = document.createElement('div');
+    this.menu.id = "menu";
+
+    this.menulogo = document.createElement('img');
+    this.menulogo.id = "menulogo";
+    this.menulogo.src = "img/menulogo.png";
+
+    this.menuflex = document.createElement('div');
+    this.menuflex.id = "menuflex";
+
+    this.scbutton1 = document.createElement('button');
+    this.scbutton1.className = "scenebuttons";
+    this.scbutton1.id = "scbutton1";
+
+    this.scbutton2 = document.createElement('button');
+    this.scbutton2.className = "scenebuttons";
+    this.scbutton2.id = "scbutton2";
+
+
+    this.scbutton3 = document.createElement('button');
+    this.scbutton3.className = "scenebuttons";
+    this.scbutton3.id = "scbutton3";
+
+
+    this.menuflex.appendChild(this.menulogo);
+    this.menuflex.appendChild(this.scbutton1);
+    this.menuflex.appendChild(this.scbutton2);
+    this.menuflex.appendChild(this.scbutton3);
+
+    this.menu.appendChild(this.menuflex);
+    document.body.appendChild( this.menu );
+
+
+
 
 
     //
