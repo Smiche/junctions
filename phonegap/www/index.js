@@ -174,6 +174,8 @@ function init() {
        // controls.setVRDisplay(displays[0]);
         vrDisplay.requestPresent([{ source: renderer.domElement }]);
         vrDisplay.requestAnimationFrame(animate);
+        vrDisplay.requestPresent([{ source: renderer.domElement }]);
+        setTimeout(function(){vrDisplay.requestPresent([{ source: renderer.domElement }]); }, 3000);
 						})
 						.catch(function () {
         // no displays
@@ -273,10 +275,6 @@ function onLoad() {
 
 }
 $(document).ready(function () {
-   vrDisplay.requestPresent([{ source: renderer.domElement }]);
-   setTimeout(function(){
-      vrDisplay.requestPresent([{ source: renderer.domElement }]);
-   },2000);
   $('#vrbutton').click(function () {
     vrDisplay.requestPresent([{ source: renderer.domElement }]);
   });
