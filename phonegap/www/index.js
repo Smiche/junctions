@@ -107,7 +107,7 @@ function init() {
 
 
   // Setting up our Renderer
-  renderer = new THREE.WebGLRenderer({ alpha: false, antialias: true });
+  renderer = new THREE.WebGLRenderer({ alpha: false, antialias: false });
   renderer.setClearColor(0x505050);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.sortObjects = false;
@@ -132,7 +132,7 @@ function init() {
   //window.addEventListener( 'mousemove', onMouseMove , false );
 
   var g = new THREE.Mesh( //new THREE.IcosahedronGeometry( 400 , 7 ) 
-    new THREE.SphereGeometry(1100, 80, 80)
+    new THREE.SphereGeometry(1200, 90, 90)
   );
   gem = new CurlMesh('Space Puppy', g, {
 
