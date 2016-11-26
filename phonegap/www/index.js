@@ -8,7 +8,7 @@ WebVRConfig = {
 }
 var container, camera, scene, renderer, stats, effect;
 var vrDisplay = null;
-var camX = 0 , camY = 0, camZ = 0;
+var camX = 0, camY = 0, camZ = 0;
 
 var gem, gui;
 
@@ -78,17 +78,17 @@ function init() {
   camera = new THREE.PerspectiveCamera(
     50,
     window.innerWidth / window.innerHeight,
-    1,
-    5000
+    0.1,
+    10000
   );
 
   // placing our camera position so it can see everything
-  camera.position.z = 0;
-  camera.position.y = 0;
-  camera.position.x = 0;
-  camera.position.set(0,0,0);
-  camera.up = new THREE.Vector3(0,0,1);
-  camera.lookAt(new THREE.Vector3(3,3,3));
+  camera.position.z = 1;
+  // camera.position.y = 0;
+  // camera.position.x = 0;
+  //camera.position.set(0,0,0);
+  //camera.up = new THREE.Vector3(0,0,1);
+  camera.lookAt(new THREE.Vector3());
 
 
   // Getting the container in the right location
@@ -106,22 +106,22 @@ function init() {
   // Setting up our Renderer
   renderer = new THREE.WebGLRenderer({ alpha: false, antialias: true });
   renderer.setClearColor(0x505050);
-		renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(window.devicePixelRatio);
   renderer.sortObjects = false;
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
   renderer.domElement.style.background = "#000";
 
   /* //RIP CONTROLS */
-  
-  controls = new THREE.TrackballControls( camera , renderer.domElement);
+
+  controls = new THREE.TrackballControls(camera, renderer.domElement);
   controls.minDistance = 1;
   controls.maxDistance = 3000;
-  
+
 
   //controls = new THREE.VRControls(camera);
   console.log(controls);
-		effect = new THREE.VREffect(renderer);
+  effect = new THREE.VREffect(renderer);
 
 
   // Making sure our renderer is always the right size
@@ -168,7 +168,7 @@ function init() {
         console.log(displays);
         vrDisplay = displays[0];
 
-        displayReady();
+        // displayReady();
 
         //controls.setVRDisplay(displays[0]);
         vrDisplay.requestPresent([{ source: renderer.domElement }]);
@@ -189,18 +189,18 @@ function displayReady() {
   // device APIs are available
   //
   function onDeviceReady() {
-   accelListener = navigator.accelerometer.watchAcceleration(onSuccess, onError, {frequency: 32});
+    accelListener = navigator.accelerometer.watchAcceleration(onSuccess, onError, { frequency: 32 });
   }
 
-  var onError = function(err){
+  var onError = function (err) {
     console.log(err);
   }
   // onSuccess: Get a snapshot of the current acceleration
   //
   function onSuccess(acceleration) {
-    camX = -1*acceleration.x;
-    camY = -1*acceleration.y;
-    camZ =  acceleration.z;
+    camX = -1 * acceleration.x;
+    camY = -1 * acceleration.y;
+    camZ = acceleration.z;
     ///vrDisplay.poseSensor_.gyroscope.x = acceleration.x;
     //vrDisplay.poseSensor_.gyroscope.y = acceleration.y;
     //vrDisplay.poseSensor_.gyroscope.z = acceleration.z;
@@ -213,12 +213,11 @@ function displayReady() {
 }
 
 function animate() {
-  camera.lookAt(new THREE.Vector3(camX,camY,camZ));
+  // camera.lookAt(new THREE.Vector3(camX,camY,camZ));
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
   G_UNIFORMS.time.value += G_UNIFORMS.dT.value;
-
   gem.update();
 
   stats.update();
