@@ -18,6 +18,13 @@ function Loader(  params ){
     this.numberLoaded = 0;
     this.numberToLoad = this.params.numberToLoad;
 
+    //screen.lockOrientation('landscape');
+
+
+    window.addEventListener("orientationchange", function(){
+    console.log(screen.orientation); // e.g. portrait
+    });
+
     this.curtain = document.createElement('div');
     this.curtain.id = "curtain";
 
