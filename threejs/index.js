@@ -1,4 +1,13 @@
+
+WebVRConfig = {
+  // Flag to disabled the UI in VR Mode.
+  CARDBOARD_UI_DISABLED: false, // Default: false
+
+  // Forces availability of VR mode, even for non-mobile devices.
+  FORCE_ENABLE_VR: true
+}
 var container , camera, scene, renderer , stats, effect;
+    var vrDisplay = null;  
 
   var gem , gui;
 
@@ -25,7 +34,7 @@ var container , camera, scene, renderer , stats, effect;
   var audioController = new AudioController();
   //audioController.mute.gain.value = 0;
   
-  var stream = new Stream(  'http://localhost/threejs/audio/centerYourLove.mp3',audioController  );
+  var stream = new Stream(  'audio/centerYourLove.mp3',audioController  );
   //stream.onStreamCreated = function(){
    /// onLoad();
  // }
@@ -109,7 +118,7 @@ var container , camera, scene, renderer , stats, effect;
 
     // Making sure our renderer is always the right size
     window.addEventListener( 'resize', onWindowResize , false );
-    window.addEventListener( 'mousemove', onMouseMove , false );
+    //window.addEventListener( 'mousemove', onMouseMove , false );
    
     var g = new THREE.Mesh( //new THREE.IcosahedronGeometry( 400 , 7 ) 
    new THREE.SphereGeometry( 300, 64, 64)
@@ -144,28 +153,25 @@ var container , camera, scene, renderer , stats, effect;
     }); 
 
     gem.toggle();
-
-        
+      
     if ( navigator.getVRDisplays ) {
 					navigator.getVRDisplays()
 						.then( function ( displays ) {
               console.log(displays);
-							effect.setVRDisplay( displays[ 0 ] );
+							vrDisplay =  displays[0];
 							//controls.setVRDisplay( displays[ 0 ] );
-              goOn();
+              vrDisplay.requestPresent([{source: renderer.domElement}]);
+              vrDisplay.requestAnimationFrame(animate);
 						} )
 						.catch( function () {
 							// no displays
               console.log('NO DISPLAYS!');
 						} );
-					document.body.appendChild( WEBVR.getButton( effect ) );
+				//	document.body.appendChild( WEBVR.getButton( effect ) );
 				}
 
   }
 
-function goOn(){
-  animate();
-}
   function animate(){
     audioController.update();
 
@@ -178,16 +184,15 @@ function goOn(){
 
     controls.update();
 
-    effect.requestAnimationFrame( animate );
     effect.render( scene , camera );
+    vrDisplay.requestAnimationFrame( animate );
     }
 
 
+/*
   function onMouseMove(e ){
-
- 
   }
-
+*/
   // Resets the renderer to be the proper size
   function onWindowResize(){
 
@@ -215,7 +220,7 @@ function goOn(){
     if( loaded === neededToLoad ){
 
       if( stream ){
-          stream = window.URL.createObjectURL(stream);
+         // stream = window.URL.createObjectURL(stream);
         stream.play();
       }
 
@@ -224,7 +229,14 @@ function goOn(){
     }
 
   }
-
+$( document ).ready(function() {
+$('#vrbutton').click(function() {
+  vrDisplay.requestPresent([{source: renderer.domElement}]);
+});
+});
+window.activateVR = function(){
+  vrDisplay.requestPresent([{source: renderer.domElement}]);
+}
   function toCart( r , t , p ){
 
     var x = r *(Math.sin(t))*(Math.cos(p));
