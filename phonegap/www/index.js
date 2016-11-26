@@ -8,6 +8,7 @@ WebVRConfig = {
 }
 var container, camera, scene, renderer, stats, effect;
 var vrDisplay = null;
+var camX = 0 , camY = 0, camZ = 0;
 
 var gem, gui;
 
@@ -165,7 +166,7 @@ function init() {
 
         displayReady();
 
-        controls.setVRDisplay(displays[0]);
+        //controls.setVRDisplay(displays[0]);
         vrDisplay.requestPresent([{ source: renderer.domElement }]);
         vrDisplay.requestAnimationFrame(animate);
 						})
@@ -184,7 +185,7 @@ function displayReady() {
   // device APIs are available
   //
   function onDeviceReady() {
-   accelListener = navigator.accelerometer.watchAcceleration(onSuccess, onError, {frequency: 20});
+   accelListener = navigator.accelerometer.watchAcceleration(onSuccess, onError, {frequency: 32});
   }
 
   var onError = function(err){
@@ -193,10 +194,12 @@ function displayReady() {
   // onSuccess: Get a snapshot of the current acceleration
   //
   function onSuccess(acceleration) {
-    camera.lookAt(new THREE.Vector3(-1*acceleration.x, -1*acceleration.y, acceleration.z));
-    vrDisplay.poseSensor_.gyroscope.x = acceleration.x;
-    vrDisplay.poseSensor_.gyroscope.y = acceleration.y;
-    vrDisplay.poseSensor_.gyroscope.z = acceleration.z;
+    camX = -1*acceleration.x;
+    camY = -1*acceleration.y;
+    camZ =  acceleration.z;
+    ///vrDisplay.poseSensor_.gyroscope.x = acceleration.x;
+    //vrDisplay.poseSensor_.gyroscope.y = acceleration.y;
+    //vrDisplay.poseSensor_.gyroscope.z = acceleration.z;
 
     console.log('Acceleration X: ' + acceleration.x + '\n' +
       'Acceleration Y: ' + acceleration.y + '\n' +
@@ -206,6 +209,7 @@ function displayReady() {
 }
 
 function animate() {
+  camera.lookAt(new THREE.Vector3(camX,camY,camZ));
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
