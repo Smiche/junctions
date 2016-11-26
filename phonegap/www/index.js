@@ -108,13 +108,13 @@ function init() {
   renderer.domElement.style.background = "#000";
 
   /* //RIP CONTROLS */
-  /*
+  
   controls = new THREE.TrackballControls( camera , renderer.domElement);
   controls.minDistance = 1;
   controls.maxDistance = 3000;
-  */
+  
 
-  controls = new THREE.VRControls(camera);
+  //controls = new THREE.VRControls(camera);
   console.log(controls);
 		effect = new THREE.VREffect(renderer);
 
@@ -193,6 +193,7 @@ function displayReady() {
   // onSuccess: Get a snapshot of the current acceleration
   //
   function onSuccess(acceleration) {
+    camera.lookAt(new THREE.Vector3(-1*acceleration.x, -1*acceleration.y, acceleration.z));
     vrDisplay.poseSensor_.gyroscope.x = acceleration.x;
     vrDisplay.poseSensor_.gyroscope.y = acceleration.y;
     vrDisplay.poseSensor_.gyroscope.z = acceleration.z;
