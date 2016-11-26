@@ -81,7 +81,7 @@ function GEM( params ){
   this.material = new THREE.ShaderMaterial({
 
     uniforms:       this.uniforms,
-    attributes:     this.attributes,
+   // attributes:     this.attributes,
     vertexShader:   this.vs, 
     fragmentShader: this.fs,
     transparent:    this.params.transparent,
@@ -218,7 +218,8 @@ GEM.prototype.createGeometry = function(){
   var v = g.vertices;
 
   var geo = new THREE.BufferGeometry();  
-  
+  geo.addAttribute('v3',  null );
+
   var positions = new Float32Array( f.length * 3 * 3 );
   var tri1Array = new Float32Array( f.length * 3 * 3 );
   var tri2Array = new Float32Array( f.length * 3 * 3 );
