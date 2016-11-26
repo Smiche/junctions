@@ -114,7 +114,7 @@ var container , camera, scene, renderer , stats, effect;
     
     //controls = new THREE.VRControls( camera );
 		effect = new THREE.VREffect( renderer );
-
+    effect.setSize(window.innerHeight, window.innerWidth);
 
     // Making sure our renderer is always the right size
     window.addEventListener( 'resize', onWindowResize , false );
@@ -199,7 +199,7 @@ var container , camera, scene, renderer , stats, effect;
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
-
+    effect.setSize( window.innerWidth, window.innerHeight );
     renderer.setSize( window.innerWidth, window.innerHeight );
    
     var dpr = devicePixelRatio || 1;
