@@ -36,7 +36,7 @@ var clock = new THREE.Clock();
 var audioController = new AudioController();
 //audioController.mute.gain.value = 0;
 
-var stream = new Stream('audio/centerYourLove.mp3', audioController);
+var stream = new Stream('audio/split.mp3', audioController);
 //stream.onStreamCreated = function(){
 /// onLoad();
 // }
@@ -129,7 +129,7 @@ function init() {
   window.addEventListener('resize', onWindowResize, false);
   //window.addEventListener( 'mousemove', onMouseMove , false );
 
-  var g = new THREE.Mesh( //new THREE.IcosahedronGeometry( 400 , 7 ) 
+  var g = new THREE.Mesh( //new THREE.IcosahedronGeometry( 400 , 7 )
     new THREE.SphereGeometry(500, 75, 75)
   );
   gem = new CurlMesh('Space Puppy', g, {
