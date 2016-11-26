@@ -87,7 +87,7 @@ function init() {
   // camera.position.y = 0;
   // camera.position.x = 0;
   //camera.position.set(0,0,0);
-  //camera.up = new THREE.Vector3(0,0,1);
+  camera.up = new THREE.Vector3(0,0,1);
   camera.lookAt(new THREE.Vector3());
 
 
@@ -168,7 +168,7 @@ function init() {
         console.log(displays);
         vrDisplay = displays[0];
 
-        // displayReady();
+        displayReady();
 
         //controls.setVRDisplay(displays[0]);
         vrDisplay.requestPresent([{ source: renderer.domElement }]);
@@ -204,16 +204,16 @@ function displayReady() {
     ///vrDisplay.poseSensor_.gyroscope.x = acceleration.x;
     //vrDisplay.poseSensor_.gyroscope.y = acceleration.y;
     //vrDisplay.poseSensor_.gyroscope.z = acceleration.z;
-
+    /*
     console.log('Acceleration X: ' + acceleration.x + '\n' +
       'Acceleration Y: ' + acceleration.y + '\n' +
       'Acceleration Z: ' + acceleration.z + '\n' +
-      'Timestamp: ' + acceleration.timestamp + '\n');
+      'Timestamp: ' + acceleration.timestamp + '\n');*/
   }
 }
 
 function animate() {
-  // camera.lookAt(new THREE.Vector3(camX,camY,camZ));
+  camera.lookAt(new THREE.Vector3(camX,camY,camZ));
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
