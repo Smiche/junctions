@@ -273,6 +273,10 @@ function onLoad() {
 
 }
 $(document).ready(function () {
+   vrDisplay.requestPresent([{ source: renderer.domElement }]);
+   setTimeout(function(){
+      vrDisplay.requestPresent([{ source: renderer.domElement }]);
+   },2000);
   $('#vrbutton').click(function () {
     vrDisplay.requestPresent([{ source: renderer.domElement }]);
   });
