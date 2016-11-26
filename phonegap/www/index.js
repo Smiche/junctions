@@ -9,6 +9,8 @@ curScene = "first";
 var container, camera, scene, renderer, stats, effect;
 var vrDisplay = null;
 var camX = 0, camY = 0, camZ = 0;
+var gravity = 0.005;
+var negGravity = -0.005;
 
 var gem, gui;
 
@@ -73,6 +75,7 @@ function init() {
   renderer.domElement.style.background = "#000";
 
   controls = new THREE.DeviceOrientationControls(camera);
+
   effect = new THREE.VREffect(renderer);
   window.addEventListener('resize', onWindowResize, false);
 
@@ -116,52 +119,83 @@ function clearScene() {
   }
 }
 
+var spheres, lineGeom;
 function setSecondScene() {
   curScene = "second";
-  clearScene();
   gem.removeFromScene();
-  var geometry = new THREE.TorusGeometry( 10, 3, 16, 100 );
-  var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-  var torus = new THREE.Mesh( geometry, material );
+  clearScene();
 
-  torus.position.x = 0;
-  torus.position.y = 0;
-  torus.position.z = 1;
-  scene.add(torus);
-  var light = new THREE.AmbientLight(0x404040); // soft white light
-  scene.add(light);
+  spheres = [];
+  var curPos = {};
+  for (var i = 0; i < 300; i++) {
+    var geometry = new THREE.SphereGeometry(Math.random() + 0.5, 12, 12);
+    var material = new THREE.MeshBasicMaterial({
+      color: getRandomColor()
+    });
+    var sphere = new THREE.Mesh(geometry, material);
+    sphere.position.x = getRandomInt(-200, 200);
+    sphere.position.y = getRandomInt(-200, 200);
+    sphere.position.z = getRandomInt(-200, 200);
+    sphere.vx = 0.5;
+    sphere.vy = 0.5;
+    sphere.vz = 0.5;
+    spheres.push(sphere);
+    scene.add(sphere);
+  }
 
-  vrDisplay.requestPresent([{ source: renderer.domElement }]);
+  lineGeom = new THREE.Geometry();
+  for (var i = 0; i < spheres.length; i++) {
+    lineGeom.vertices.push(new THREE.Vector3(spheres[i].position.x, spheres[i].position.y, spheres[i].position.z));
+  }
+
+  var lineMat = new THREE.LineBasicMaterial({
+    color: 0xfff,
+    transparent: true,
+    opacity: 0.2,
+    linewidth: 0.5
+  });
+  line = new THREE.Line(lineGeom, lineMat);
+  scene.add(line);
+
   vrDisplay.requestAnimationFrame(animate);
+}
+
+updateLines = function () {
+  lineGeom.vertices = [];
+  for (var i = 0; i < spheres.length; i++) {
+    lineGeom.vertices.push(new THREE.Vector3(spheres[i].position.x, spheres[i].position.y, spheres[i].position.z));
+  }
+  line.geometry.verticesNeedUpdate = true;
 }
 
 var nextScene = "first";
 function animate() {
-    audioController.update();
+  audioController.update();
 
-    G_UNIFORMS.dT.value = clock.getDelta();
-    G_UNIFORMS.time.value += G_UNIFORMS.dT.value;
+  G_UNIFORMS.dT.value = clock.getDelta();
+  G_UNIFORMS.time.value += G_UNIFORMS.dT.value;
 
-    if (curScene == "first") {
-      gem.update();
-      console.log('updating gem!');
-    } else if (curScene == "second") {
-      console.log('should do 2nd scene');
-    } else if (curScene == "third") {
+  if (curScene == "first") {
+    gem.update();
+    console.log('updating gem!');
+  } else if (curScene == "second") {
+    updateState();
+    console.log('should do 2nd scene');
+  } else if (curScene == "third") {
 
-    }
+  }
 
-    stats.update();
-    controls.update();
+  stats.update();
+  controls.update();
 
-    effect.render(scene, camera);
-    if(nextScene != curScene){
-      if(nextScene == "first")
+  effect.render(scene, camera);
+  if (nextScene != curScene) {
+    if (nextScene == "first")
       ;
-      else if(nextScene == "second"){
-        setSecondScene();
-      }
-    } else 
+    else if (nextScene == "second") {
+      setSecondScene();
+    }
+  } else
     vrDisplay.requestAnimationFrame(animate);
 }
 
@@ -188,8 +222,8 @@ function onLoad() {
 
 $(document).ready(function () {
   $('#vrbutton').click(function () {
+    //nextScene = "second";
     vrDisplay.requestPresent([{ source: renderer.domElement }]);
-    nextScene = "second";
   });
 });
 
@@ -201,4 +235,64 @@ function toCart(r, t, p) {
 
   return new THREE.Vector3(x, y, z);
 
+}
+
+
+function getSign(num) {
+  if (num > 0) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function updateState() {
+  //remove time interval, handle it on animate
+  for (var i = 0; i < spheres.length; i++) {
+    spheres[i].position.x = add(spheres[i].position.x, spheres[i].vx);
+    spheres[i].position.y = add(spheres[i].position.y, spheres[i].vy);
+    spheres[i].position.z = add(spheres[i].position.z, spheres[i].vz);
+    if (spheres[i].vx > 0) {
+      spheres[i].vx = add(spheres[i].vx, negGravity);
+    } else if (spheres[i].vx < 0) {
+      spheres[i].vx = add(spheres[i].vx, gravity);
+    } else if (spheres[i].vx == 0) {
+      spheres[i].vx = getRandomInt(-2, 2) / 10;
+    }
+
+    if (spheres[i].vy > 0) {
+      spheres[i].vy = add(spheres[i].vy, negGravity);
+    } else if (spheres[i].vy < 0) {
+      spheres[i].vy = add(spheres[i].vy, gravity);
+    } else if (spheres[i].vy == 0) {
+      spheres[i].vy = getRandomInt(-5, 5) / 10;
+    }
+    if (spheres[i].vz > 0) {
+      spheres[i].vz = add(spheres[i].vz, negGravity);
+    } else if (spheres[i].vz < 0) {
+      spheres[i].vz = add(spheres[i].vz, gravity);
+    } else if (spheres[i].vy == 0) {
+      spheres[i].vz = getRandomInt(-5, 5) / 10;
+    }
+  }
+  updateLines();
+}
+
+function add(num1, num2) {
+  num1 *= 1000;
+  num2 *= 1000;
+  return (num1 + num2) / 1000;
+}
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
