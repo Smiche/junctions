@@ -87,7 +87,7 @@ function init() {
   // camera.position.y = 0;
   // camera.position.x = 0;
   //camera.position.set(0,0,0);
-  camera.up = new THREE.Vector3(0,0,1);
+  //camera.up = new THREE.Vector3(0,0,1);
   camera.lookAt(new THREE.Vector3());
 
 
@@ -168,7 +168,7 @@ function init() {
         console.log(displays);
         vrDisplay = displays[0];
 
-        displayReady();
+        //displayReady();
 
         //controls.setVRDisplay(displays[0]);
         vrDisplay.requestPresent([{ source: renderer.domElement }]);
@@ -213,7 +213,7 @@ function displayReady() {
 }
 
 function animate() {
-  camera.lookAt(new THREE.Vector3(camX,camY,camZ));
+  controls.target  = new THREE.Vector3(Math.random(),Math.random(),Math.random());
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
