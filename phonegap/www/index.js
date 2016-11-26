@@ -2,8 +2,8 @@
 WebVRConfig = {
   // Flag to disabled the UI in VR Mode.
   CARDBOARD_UI_DISABLED: false, // Default: false
- //DIRTY_SUBMIT_FRAME_BINDINGS: true,
- BUFFER_SCALE: 0.5,
+  //DIRTY_SUBMIT_FRAME_BINDINGS: true,
+  BUFFER_SCALE: 0.5,
   // Forces availability of VR mode, even for non-mobile devices.
   FORCE_ENABLE_VR: true
 }
@@ -84,12 +84,12 @@ function init() {
   );
 
   // placing our camera position so it can see everything
-  camera.position.z = 1;
+  camera.position.z = 0;
   // camera.position.y = 0;
   // camera.position.x = 0;
   //camera.position.set(0,0,0);
   //camera.up = new THREE.Vector3(0,0,1);
-  camera.lookAt(new THREE.Vector3());
+  //camera.lookAt(new THREE.Vector3(0,0,-1));
 
 
   // Getting the container in the right location
@@ -102,6 +102,8 @@ function init() {
   stats = new Stats();
   stats.domElement.id = 'stats';
   document.body.appendChild(stats.domElement);
+
+
 
 
   // Setting up our Renderer
@@ -119,7 +121,7 @@ function init() {
   controls.minDistance = 1;
   controls.maxDistance = 3000;
   */
-  controls = new THREE.DeviceOrientationControls( camera );
+  controls = new THREE.DeviceOrientationControls(camera);
   //controls = new THREE.VRControls(camera);
   console.log(controls);
   effect = new THREE.VREffect(renderer);
@@ -130,7 +132,7 @@ function init() {
   //window.addEventListener( 'mousemove', onMouseMove , false );
 
   var g = new THREE.Mesh( //new THREE.IcosahedronGeometry( 400 , 7 ) 
-    new THREE.SphereGeometry(500, 75, 75)
+    new THREE.SphereGeometry(700, 80, 80)
   );
   gem = new CurlMesh('Space Puppy', g, {
 
@@ -138,10 +140,10 @@ function init() {
 
       noiseSize: { type: "f", value: .002, constraints: [.0001, .01] },
       noiseVariation: { type: "f", value: .8, constraints: [.01, 1.] },
-      dampening: { type: "f", value: 1., constraints: [.8, .999] },
-      noisePower: { type: "f", value: 70, constraints: [0, 200.] },
-      returnPower: { type: "f", value: 1., constraints: [.0, 2.] },
-      audioVelMultiplier: { type: "f", value: .8, constraints: [0, 1] },
+      dampening: { type: "f", value: 3., constraints: [.8, .999] },
+      noisePower: { type: "f", value: 60, constraints: [0, 200.] },
+      returnPower: { type: "f", value: 1.2, constraints: [.0, 2.] },
+      audioVelMultiplier: { type: "f", value: .7, constraints: [0, 1] },
 
     },
 
@@ -169,11 +171,11 @@ function init() {
         console.log(displays);
         vrDisplay = displays[0];
 
-       // displayReady();
+        // displayReady();
 
-       // controls.setVRDisplay(displays[0]);
+        // controls.setVRDisplay(displays[0]);
         vrDisplay.requestPresent([{ source: renderer.domElement }]);
-        setTimeout(function(){vrDisplay.requestPresent([{ source: renderer.domElement }]); }, 3000);
+        setTimeout(function () { vrDisplay.requestPresent([{ source: renderer.domElement }]); }, 3000);
         vrDisplay.requestAnimationFrame(animate);
 						})
 						.catch(function () {
