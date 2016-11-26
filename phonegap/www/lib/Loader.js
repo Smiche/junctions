@@ -1,4 +1,4 @@
-  
+
 var failureTitleText = "so here are some screen captures instead ";
 var failureDialog = "Your Browser is missing the following Technologies:";
 
@@ -11,61 +11,36 @@ function Loader(  params ){
       videoHeight: 281,
       neededTech:     ['webGL','audio','mobile']
     });
-    
+
 
     this.neededTech = this.params.neededTech;
 
     this.numberLoaded = 0;
     this.numberToLoad = this.params.numberToLoad;
-    
+
     this.curtain = document.createElement('div');
     this.curtain.id = "curtain";
+
+    this.splash = document.createElement('img');
+    this.splash.id = "splash";
+    this.splash.src = "img/splash.png";
+    this.curtain.appendChild(this.splash);
 
     document.body.appendChild( this.curtain );
 
 
-    this.loadBar = document.createElement('div');
-    //this.loadBar.id = "loadBar";
 
-    
-    this.loadBar.style.position      = 'absolute';
-    this.loadBar.style.top           = '50%';
-    this.loadBar.style.height        = '1px';
-    this.loadBar.style.width         = '10px';
-    this.loadBar.style.background    = '#fff';
-
-
-
-    this.loadInfo = document.createElement('div');
-    this.loadInfo.id = 'loadInfo';
-
-    this.curtain.appendChild( this.loadInfo );
-    
-    this.loadBarAddAmount = window.innerWidth / (this.numberToLoad+1);
-
-    this.curtain.appendChild( this.loadBar );
-
-    this.loadingGif     = document.createElement( 'img' );
-    this.loadingGif.src = this.params.loadGif;
-    this.loadingGif.id  = 'loadingGif';
+    //
+    // this.loadingGif     = document.createElement( 'img' );
+    // this.loadingGif.src = this.params.loadGif;
+    // this.loadingGif.id  = 'loadingGif';
 
 
     //this.OBJLoader = new THREE.OBJLoader();
 
-    var curtainTemp = this.curtain;
-
-    this.loadingGif.onload = function(){
-   
-      var margin = this.height + 10
-      this.style.marginLeft  = "-" + this.width / 2 + "px";
-      this.style.marginTop   = "-" + margin + "px";
-      curtainTemp.appendChild( this );
-
-    }
-
     //this.addStartButton();
 
-    // Conditions are things that will check each time something 
+    // Conditions are things that will check each time something
     // new is loaded, allowing us to start putting together certain parts
     // of the program after a specific condition is made
     this.conditions = [];
@@ -109,14 +84,14 @@ function Loader(  params ){
 
 
     loadBarAdd: function(){
-      
+
       var oldWidth = parseInt( this.loadBar.style.width );
       var newWidth = oldWidth + this.loadBarAddAmount;
 
       this.loadBar.style.width = newWidth + "px";
 
       this.numberLoaded ++;
-    
+
       this.checkConditions();
 
       if( this.numberLoaded == this.numberToLoad ){
@@ -129,7 +104,7 @@ function Loader(  params ){
     endLoading: function(){this.loadBarAdd();},
     addLoad: function(){this.addToLoadBar(); },
     onLoad: function(){this.loadBarAdd(); },
-  
+
     // This will run through all of our saved conditions
     // and trigger whatever is necessary when we need to
     checkConditions: function(){
@@ -151,7 +126,7 @@ function Loader(  params ){
     },
 
     addCondition: function( condition , callback ){
-      this.conditions.push( [ condition , callback ] ); 
+      this.conditions.push( [ condition , callback ] );
     },
 
     addFailureDialog: function(){
@@ -216,7 +191,7 @@ function Loader(  params ){
       string += w * .618;
       string += '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><br/>'
 
-        
+
       string += '<iframe src="//player.vimeo.com/video/';
       string += 96872530;
       string += '" width="'
@@ -225,7 +200,7 @@ function Loader(  params ){
       string += w * .618;
       string += '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><br/>'
 
-        
+
       string += '<iframe src="//player.vimeo.com/video/';
       string += 78139371;
       string += '" width="'
@@ -234,7 +209,7 @@ function Loader(  params ){
       string += w * .618;
       string += '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><br/>'
 
-        
+
       string += '<iframe src="//player.vimeo.com/video/';
       string += 86874956;
       string += '" width="'
@@ -245,7 +220,7 @@ function Loader(  params ){
 
         96993970
 
-      
+
       this.failureVideo.innerHTML = string;
 
       /*this.failureImg = document.createElement( 'img' );
@@ -257,15 +232,15 @@ function Loader(  params ){
       this.failureDialog.appendChild( failureTitle);
       this.failureDialog.appendChild( this.failureVideo );
 
-      
+
      // throw new Error('This is not an error. This is just to abort javascript');
-  
+
 
     },
 
     addFailure: function( failureName , failureLink ){
 
-      
+
       if( !this.failureDialog )
         this.addFailureDialog();
 
@@ -278,7 +253,7 @@ function Loader(  params ){
       console.log('FAILURE');
       this.failureList.appendChild( failure );
 
-      //var failureName = 
+      //var failureName =
       this.failures.push( [failureName,failureLink] );
 
       var xHalf = this.failureDialog.clientWidth / 2;
@@ -303,17 +278,17 @@ function Loader(  params ){
     },
 
     onFinishedLoading: function(){
-   
+
       var self = this;
 
       if( !this.failures.length ){
-      
+
         //$("#startInfo").fadeIn(1000);
         // this.startInfo
         //this.onStart();
         //
         this.liftCurtain();
-        
+
       }
 
     },
@@ -332,7 +307,7 @@ function Loader(  params ){
 
       this.startInfo.appendChild( button );
 
-      
+
       this.curtain.appendChild( this.startInfo );
 
 
@@ -342,7 +317,7 @@ function Loader(  params ){
     liftCurtain: function(){
 
       var self = this;
-     
+
       this._onStart();
 
        //link.deactivate();
@@ -365,8 +340,8 @@ function Loader(  params ){
       }
 
       this.hasStarted = true;
-   
-           
+
+
     },
 
     onStart:function(){},
@@ -397,19 +372,19 @@ function Loader(  params ){
       }
 
       if( this.failures.length > 0 ){
-        
+
         throw new Error('This is not an error. This is just to abort javascript');
 
       }
 
     },
-    
+
     detectWebGL: function(){
 
       var webGL = function() { try { return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' ); } catch( e ) { return false; } };
 
       var gl = webGL();
-      
+
       if( false )
         this.addFailure( "WebGL" ,'http://get.webgl.org/');
 
@@ -421,7 +396,6 @@ function Loader(  params ){
       //try {
       //  window.AudioContext = window.AudioContext;//||window.webkitAudioContext;
       //}catch(e) {
-        console.log('ASDAS');
         this.addFailure( 'Non Webkit Audio API' ,'http://caniuse.com/audio-api' ); 
       }
 
@@ -429,7 +403,7 @@ function Loader(  params ){
 
     detectMobile: function(){
 
-      var detectM = function () { 
+      var detectM = function () {
         if( navigator.userAgent.match(/Android/i)
         || navigator.userAgent.match(/webOS/i)
         || navigator.userAgent.match(/iPhone/i)
@@ -454,5 +428,3 @@ function Loader(  params ){
 
 
   }
-
-
