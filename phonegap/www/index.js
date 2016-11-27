@@ -171,9 +171,9 @@ var setSecondScene = function () {
       color: getRandomColor()
     });
     var sphere = new THREE.Mesh(geometry, material);
-    sphere.position.x = getRandomInt(-200, 200);
-    sphere.position.y = getRandomInt(-200, 200);
-    sphere.position.z = getRandomInt(-200, 200);
+    sphere.position.x = getRandomInt(-100, 100);
+    sphere.position.y = getRandomInt(-100, 100);
+    sphere.position.z = getRandomInt(-100, 100);
     sphere.vx = 0.5;
     sphere.vy = 0.5;
     sphere.vz = 0.5;
@@ -224,6 +224,7 @@ updateLines = function () {
 
 var nextScene = "first";
 function animate() {
+   console.log(G_UNIFORMS);
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
