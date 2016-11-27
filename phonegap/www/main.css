@@ -7,7 +7,9 @@ html{
  // cursor: vertical-text;
 
 }
-
+*{
+  outline:none !important;
+}
 body{
   color:#000;
   background:#000;
@@ -246,7 +248,7 @@ display:none;
   right           : 0px;
   top             : 0px;
   pointer-events  : auto;
-
+  display:none;
 }
 
 
@@ -291,13 +293,79 @@ display:none;
 //background:#f00;
 }
 
-#overlay {
-  position: absolute;
-  background: white;
-  width: 50%;
-  height: 50%;
-  left: 30%;
-  top: 30%;
-  overflow: scroll;
-  display: none;
+#cardboardImage{
+  width: 60px;
+  height: 30px;
+  margin: auto;
 }
+#vrbutton {
+  position:absolute;
+  left:0;
+  top:0;
+  background-color: black;
+  border:none;
+  border-bottom: 1px solid white;
+  width: 25vw;
+  height: 10vh;
+  z-index:900;
+}
+#menu{
+  position      : absolute;
+  z-index       : 899;
+  top           : 0;
+  right          : 0;
+  width         : 100%;
+  height        : 100%;
+  background    : #141b21;
+  display:none;
+}
+
+#menubutton {
+  position:absolute;
+  right:0;
+  top:0;
+  font-size: 25px;
+  color:white;
+  background-color: black;
+  border:none;
+  border-bottom: 1px solid white;
+  width: 25vw;
+  height: 10vh;
+  z-index:900;
+}
+
+h1:hover{
+  background-color: black;
+}
+
+#splash {
+  margin-left: 10vw;
+  margin-top: 30vh;
+  width      : 80vw;
+  max-width   : 600px;
+  max-height  : 200px;
+}
+
+#menulogo{
+  width: 40vw;
+  z-index:900;
+  max-width: 150px;
+  max-height: 150px;
+}
+
+#menuflex{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scenebuttons{
+  width:60vw;
+  height:10vh;
+  margin: 20px;
+   padding: 5px;
+    font-size: 25px;
+    color:white;
+    background-color: black;
+    border:none;
+    border-bottom: 1px solid white;}
