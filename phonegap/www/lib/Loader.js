@@ -48,18 +48,20 @@ function Loader(  params ){
     this.scbutton1 = document.createElement('button');
     this.scbutton1.className = "scenebuttons";
     this.scbutton1.id = "scbutton1";
-    this.scbutton1.innerHTML = "SPACESPHERE"
+    this.scbutton1.innerHTML = "SPACESPHERE";
 
     this.scbutton2 = document.createElement('button');
     this.scbutton2.className = "scenebuttons";
     this.scbutton2.id = "scbutton2";
-    this.scbutton1.innerHTML = "CONNECTIONS"
+    this.scbutton2.innerHTML = "CONNECTIONS";
 
 
 
     this.scbutton3 = document.createElement('button');
     this.scbutton3.className = "scenebuttons";
     this.scbutton3.id = "scbutton3";
+    this.scbutton2.innerHTML = "CREDITS";
+
 
 
     this.menuflex.appendChild(this.menulogo);
