@@ -40,7 +40,7 @@ var audioController = new AudioController();
 initMusic(function () {
   stream = new Stream(musicArray[0], audioController)
 
-  var playUntilItDies = function() {
+  var playUntilItDies = function () {
     setTimeout(function () {
       currentTrack++;
       if (currentTrack >= musicArray.length) {
@@ -77,7 +77,7 @@ var G_UNIFORMS = {
 }
 
 function checkLoad(isMusic, areShaders) {
-  isMusicLoaded    = isMusicLoaded    || isMusic;
+  isMusicLoaded = isMusicLoaded || isMusic;
   areShadersLoaded = areShadersLoaded || areShaders;
 
   console.log(isMusicLoaded, areShadersLoaded);
@@ -185,7 +185,7 @@ function setSecondScene() {
   for (var i = 0; i < spheres.length; i++) {
     lineGeom.vertices.push(new THREE.Vector3(spheres[i].position.x, spheres[i].position.y, spheres[i].position.z));
   }
-  
+
   var lineMat = new THREE.LineBasicMaterial({
     color: 0xfff,
     transparent: true,
@@ -223,7 +223,7 @@ updateLines = function () {
 
 var nextScene = "first";
 function animate() {
-   console.log(gem.soul);
+  console.log(gem.soul);
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
@@ -286,24 +286,30 @@ $(document).ready(function () {
   });
 
   $('#scbutton1').click(function () {
-    console.log("call scene one")
+    console.log("call scene one");
+    toggleMenu();
+
   });
 
 
-    $('#scbutton2').click(function () {
-      console.log("call scene two")
-    });
+  $('#scbutton2').click(function () {
+    console.log("call scene two");
+    toggleMenu();
+
+  });
 
 
-      $('#scbutton3').click(function () {
-        console.log("call scene three")
-      });
+  $('#scbutton3').click(function () {
+    console.log("call scene three");
+    toggleMenu();
+
+  });
 });
 
-  function toggleMenu(){
-    $("#menu").toggle(300);
+function toggleMenu() {
+  $("#menu").toggle(300);
 
-  }
+}
 function toCart(r, t, p) {
 
   var x = r * (Math.sin(t)) * (Math.cos(p));
