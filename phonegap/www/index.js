@@ -6,6 +6,11 @@ WebVRConfig = {
 }
 
 curScene = "first";
+
+var isMusicLoaded = false;
+var areShadersLoaded = false;
+var currentTrack = 0;
+
 var container, camera, scene, renderer, stats, effect;
 var vrDisplay = null;
 var camX = 0, camY = 0, camZ = 0;
@@ -31,7 +36,28 @@ setTimeout(function () {
 
 var clock = new THREE.Clock();
 var audioController = new AudioController();
-var stream = new Stream('audio/Nostrand.mp3', audioController);
+
+initMusic(function () {
+  stream = new Stream(musicArray[0], audioController)
+
+  var playUntilItDies = function() {
+    setTimeout(function () {
+      currentTrack++;
+      if (currentTrack >= musicArray.length) {
+        currentTrack = 0;
+      }
+      stream.next(musicArray[currentTrack])
+
+      playUntilItDies();
+
+    }, (musicArray[currentTrack].duration - 2) * 1000);
+  }
+  playUntilItDies();
+
+  checkLoad(true, false)
+});
+
+
 var shaders = new ShaderLoader('shaders');
 
 shaders.load('ss-fire', 'fire', 'simulation');
@@ -41,13 +67,24 @@ shaders.load('fs-weird1', 'weird1', 'fragment');
 shaders.load('fs-fire', 'fire', 'fragment');
 
 shaders.shaderSetLoaded = function () {
-  onLoad();
+  checkLoad(false, true);
 }
 
 var G_UNIFORMS = {
   dT: { type: "f", value: 0 },
   time: { type: "f", value: 0 },
   t_audio: { type: "t", value: audioController.texture },
+}
+
+function checkLoad(isMusic, areShaders) {
+  isMusicLoaded    = isMusicLoaded    || isMusic;
+  areShadersLoaded = areShadersLoaded || areShaders;
+
+  console.log(isMusicLoaded, areShadersLoaded);
+
+  if (isMusicLoaded && areShadersLoaded) {
+    onLoad();
+  }
 }
 
 function init() {

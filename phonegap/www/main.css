@@ -290,3 +290,14 @@ display:none;
 #startButton:hover{
 //background:#f00;
 }
+
+#overlay {
+  position: absolute;
+  background: white;
+  width: 50%;
+  height: 50%;
+  left: 30%;
+  top: 30%;
+  overflow: scroll;
+  display: none;
+}
