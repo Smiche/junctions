@@ -234,7 +234,6 @@ function animate() {
 
   if (curScene == "first") {
     gem.update();
-    console.log('updating gem!');
   } else if (curScene == "second") {
     updateState();
   } else if (curScene == "third") {
@@ -338,9 +337,11 @@ function updateState() {
   if (dTint < 0) {
     dTint = 0;
   }
-  //console.log(dTint);
+  //console.log(curdT);
+
   //remove time interval, handle it on animate
   for (var i = 0; i < spheres.length; i++) {
+
     //console.log("1: "+spheres[i].vx +"  2: "+spheres[i].vy + "  3."+spheres[i].vz);
     spheres[i].position.x = add(spheres[i].position.x, spheres[i].vx);
     spheres[i].position.y = add(spheres[i].position.y, spheres[i].vy);
@@ -351,7 +352,7 @@ function updateState() {
       spheres[i].vx = add(spheres[i].vx, gravity);
     } else if (parseFloat(spheres[i].vx).toPrecision(5) == 0.00000) {
       spheres[i].vx = strip(getRandomInt(-2, 2) / 100 * dTint);
-      console.log(spheres[i].vx);
+      spheres[i].material.color = new THREE.Color(rainbow(curdT));
     }
 
     if (spheres[i].vy > 0) {
@@ -360,7 +361,7 @@ function updateState() {
       spheres[i].vy = add(spheres[i].vy, gravity);
     } else if (parseFloat(spheres[i].vy).toPrecision(5) == 0.00000) {
       spheres[i].vy = strip(getRandomInt(-2, 2) / 100 * dTint);
-      console.log(spheres[i].vy);
+      spheres[i].material.color = new THREE.Color(rainbow(curdT));
     }
     if (spheres[i].vz > 0) {
       spheres[i].vz = add(spheres[i].vz, negGravity);
@@ -368,7 +369,7 @@ function updateState() {
       spheres[i].vz = add(spheres[i].vz, gravity);
     } else if (parseFloat(spheres[i].vy).toPrecision(5) == 0.00000) {
       spheres[i].vz = strip(getRandomInt(-2, 2) / 100 * dTint);
-      console.log(spheres[i].vz);
+      spheres[i].material.color = new THREE.Color(rainbow(curdT));
     }
   }
   updateLines();
@@ -391,4 +392,13 @@ function getRandomColor() {
 
 function strip(number) {
   return (parseFloat(number).toPrecision(6));
+}
+
+function rainbow(length, maxLength) {
+  maxLength = 0.070;
+  var i = (length * 255 / maxLength);
+  var r = Math.round(Math.sin(0.024 * i + 0) * 127 + 128);
+  var g = Math.round(Math.sin(0.024 * i + 2) * 127 + 128);
+  var b = Math.round(Math.sin(0.024 * i + 4) * 127 + 128);
+  return 'rgb(' + r + ',' + g + ',' + b + ')';
 }
