@@ -48,10 +48,13 @@ function Loader(  params ){
     this.scbutton1 = document.createElement('button');
     this.scbutton1.className = "scenebuttons";
     this.scbutton1.id = "scbutton1";
+    this.scbutton1.innerHTML = "SPACESPHERE"
 
     this.scbutton2 = document.createElement('button');
     this.scbutton2.className = "scenebuttons";
     this.scbutton2.id = "scbutton2";
+    this.scbutton1.innerHTML = "CONNECTIONS"
+
 
 
     this.scbutton3 = document.createElement('button');
