@@ -40,7 +40,7 @@ var audioController = new AudioController();
 initMusic(function () {
   stream = new Stream(musicArray[0], audioController)
 
-  var playUntilItDies = function() {
+  var playUntilItDies = function () {
     setTimeout(function () {
       currentTrack++;
       if (currentTrack >= musicArray.length) {
@@ -77,7 +77,7 @@ var G_UNIFORMS = {
 }
 
 function checkLoad(isMusic, areShaders) {
-  isMusicLoaded    = isMusicLoaded    || isMusic;
+  isMusicLoaded = isMusicLoaded || isMusic;
   areShadersLoaded = areShadersLoaded || areShaders;
 
   console.log(isMusicLoaded, areShadersLoaded);
@@ -109,7 +109,7 @@ function init() {
   renderer.sortObjects = false;
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
-  renderer.domElement.style.background = "#000";
+  renderer.domElement.style.background = "#fff";
 
   controls = new THREE.DeviceOrientationControls(camera);
 
@@ -157,13 +157,14 @@ function clearScene() {
 }
 
 var spheres, lineGeom;
-function setSecondScene() {
+var setSecondScene = function () {
   curScene = "second";
   gem.removeFromScene();
   clearScene();
 
+
+  renderer.setClearColor(0x000);
   spheres = [];
-  var curPos = {};
   for (var i = 0; i < 300; i++) {
     var geometry = new THREE.SphereGeometry(Math.random() + 0.5, 12, 12);
     var material = new THREE.MeshBasicMaterial({
@@ -178,6 +179,12 @@ function setSecondScene() {
     sphere.vz = 0.5;
     spheres.push(sphere);
     scene.add(sphere);
+  }
+
+  function setFirstScene() {
+    curScene = "first";
+    clearScene();
+    gem.addToScene();
   }
 
   lineGeom = new THREE.Geometry();
@@ -214,7 +221,6 @@ function animate() {
 
   if (curScene == "first") {
     gem.update();
-    console.log('updating gem!');
   } else if (curScene == "second") {
     updateState();
     console.log('should do 2nd scene');
@@ -228,7 +234,7 @@ function animate() {
   effect.render(scene, camera);
   if (nextScene != curScene) {
     if (nextScene == "first")
-      ;
+      setFirstScene();
     else if (nextScene == "second") {
       setSecondScene();
     }
@@ -259,7 +265,6 @@ function onLoad() {
 
 $(document).ready(function () {
   $('#vrbutton').click(function () {
-    //nextScene = "second";
     vrDisplay.requestPresent([{ source: renderer.domElement }]);
   });
 
@@ -268,24 +273,24 @@ $(document).ready(function () {
   });
 
   $('#scbutton1').click(function () {
-    console.log("call scene one")
+    nextScene = "first";
   });
 
 
-    $('#scbutton2').click(function () {
-      console.log("call scene two")
-    });
+  $('#scbutton2').click(function () {
+    nextScene = "second"
+  });
 
 
-      $('#scbutton3').click(function () {
-        console.log("call scene three")
-      });
+  $('#scbutton3').click(function () {
+    console.log("call scene three")
+  });
 });
 
-  function toggleMenu(){
-    $("#menu").toggle(300);
+function toggleMenu() {
+  $("#menu").toggle(300);
 
-  }
+}
 function toCart(r, t, p) {
 
   var x = r * (Math.sin(t)) * (Math.cos(p));
@@ -310,35 +315,39 @@ function getRandomInt(min, max) {
 }
 
 function updateState() {
-  //remove time interval, handle it on animate
-  for (var i = 0; i < spheres.length; i++) {
-    spheres[i].position.x = add(spheres[i].position.x, spheres[i].vx);
-    spheres[i].position.y = add(spheres[i].position.y, spheres[i].vy);
-    spheres[i].position.z = add(spheres[i].position.z, spheres[i].vz);
-    if (spheres[i].vx > 0) {
-      spheres[i].vx = add(spheres[i].vx, negGravity);
-    } else if (spheres[i].vx < 0) {
-      spheres[i].vx = add(spheres[i].vx, gravity);
-    } else if (spheres[i].vx == 0) {
-      spheres[i].vx = getRandomInt(-2, 2) / 10;
-    }
+  try {
+    //remove time interval, handle it on animate
+    for (var i = 0; i < spheres.length; i++) {
+      spheres[i].position.x = add(spheres[i].position.x, spheres[i].vx);
+      spheres[i].position.y = add(spheres[i].position.y, spheres[i].vy);
+      spheres[i].position.z = add(spheres[i].position.z, spheres[i].vz);
+      if (spheres[i].vx > 0) {
+        spheres[i].vx = add(spheres[i].vx, negGravity);
+      } else if (spheres[i].vx < 0) {
+        spheres[i].vx = add(spheres[i].vx, gravity);
+      } else if (spheres[i].vx == 0) {
+        spheres[i].vx = getRandomInt(-2, 2) / 10;
+      }
 
-    if (spheres[i].vy > 0) {
-      spheres[i].vy = add(spheres[i].vy, negGravity);
-    } else if (spheres[i].vy < 0) {
-      spheres[i].vy = add(spheres[i].vy, gravity);
-    } else if (spheres[i].vy == 0) {
-      spheres[i].vy = getRandomInt(-5, 5) / 10;
+      if (spheres[i].vy > 0) {
+        spheres[i].vy = add(spheres[i].vy, negGravity);
+      } else if (spheres[i].vy < 0) {
+        spheres[i].vy = add(spheres[i].vy, gravity);
+      } else if (spheres[i].vy == 0) {
+        spheres[i].vy = getRandomInt(-5, 5) / 10;
+      }
+      if (spheres[i].vz > 0) {
+        spheres[i].vz = add(spheres[i].vz, negGravity);
+      } else if (spheres[i].vz < 0) {
+        spheres[i].vz = add(spheres[i].vz, gravity);
+      } else if (spheres[i].vy == 0) {
+        spheres[i].vz = getRandomInt(-5, 5) / 10;
+      }
     }
-    if (spheres[i].vz > 0) {
-      spheres[i].vz = add(spheres[i].vz, negGravity);
-    } else if (spheres[i].vz < 0) {
-      spheres[i].vz = add(spheres[i].vz, gravity);
-    } else if (spheres[i].vy == 0) {
-      spheres[i].vz = getRandomInt(-5, 5) / 10;
-    }
+    updateLines();
+  } catch (e) {
+    console.log(e);
   }
-  updateLines();
 }
 
 function add(num1, num2) {
