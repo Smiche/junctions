@@ -290,16 +290,18 @@ $(document).ready(function () {
 
   $('#scbutton1').click(function () {
     nextScene = "first";
+    toggleMenu();
   });
 
 
   $('#scbutton2').click(function () {
     nextScene = "second";
+    toggleMenu();
   });
 
-
   $('#scbutton3').click(function () {
-    console.log("call scene three")
+    console.log("call scene three");
+    toggleMenu();
   });
 });
 
