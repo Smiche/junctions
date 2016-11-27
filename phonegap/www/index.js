@@ -350,8 +350,8 @@ function updateState() {
       spheres[i].vx = add(spheres[i].vx, negGravity);
     } else if (spheres[i].vx < 0) {
       spheres[i].vx = add(spheres[i].vx, gravity);
-    } else if (spheres[i].vx == 0) {
-      spheres[i].vx = getRandomInt(-1, 1) / 10 * dTint;
+    } else if (spheres[i].vx.toPrecision(5) == 0.00000) {
+      spheres[i].vx = strip(getRandomInt(-2, 2) / 10 * dTint);
       console.log(spheres[i].vx);
     }
 
@@ -359,16 +359,16 @@ function updateState() {
       spheres[i].vy = add(spheres[i].vy, negGravity);
     } else if (spheres[i].vy < 0) {
       spheres[i].vy = add(spheres[i].vy, gravity);
-    } else if (spheres[i].vy == 0) {
-      spheres[i].vy = getRandomInt(-5, 5) / 10 * dTint;
+    } else if (spheres[i].vy == 0.000000000000) {
+      spheres[i].vy = strip(getRandomInt(-3, 3) / 10 * dTint);
       console.log(spheres[i].vy);
     }
     if (spheres[i].vz > 0) {
       spheres[i].vz = add(spheres[i].vz, negGravity);
     } else if (spheres[i].vz < 0) {
       spheres[i].vz = add(spheres[i].vz, gravity);
-    } else if (spheres[i].vy == 0) {
-      spheres[i].vz = getRandomInt(-5, 5) / 10 * dTint;
+    } else if (spheres[i].vy == 0.000000000000) {
+      spheres[i].vz = strip(getRandomInt(-3, 3) / 10 * dTint);
       console.log(spheres[i].vz);
     }
   }
@@ -388,4 +388,8 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
+}
+
+function strip(number) {
+    return (parseFloat(number).toPrecision(12));
 }
