@@ -224,7 +224,7 @@ updateLines = function () {
 
 var nextScene = "first";
 function animate() {
-   console.log(G_UNIFORMS);
+   console.log(gem.soul);
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
