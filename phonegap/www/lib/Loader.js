@@ -60,7 +60,7 @@ function Loader(  params ){
     this.scbutton3 = document.createElement('button');
     this.scbutton3.className = "scenebuttons";
     this.scbutton3.id = "scbutton3";
-    this.scbutton2.innerHTML = "CREDITS";
+    this.scbutton3.innerHTML = "CREDITS";
 
 
 
