@@ -1622,6 +1622,7 @@ CardboardVRDisplay.prototype.beginPresent_ = function() {
       e.preventDefault();
     }.bind(this), function(e) {
       // Back clicked.
+			window.location.reload(true);
       this.exitPresent();
       e.stopPropagation();
       e.preventDefault();
