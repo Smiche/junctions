@@ -165,15 +165,15 @@ function setSecondScene() {
   renderer.setClearColor(0x000);
   spheres = [];
   var curPos = {};
-  for (var i = 0; i < 300; i++) {
+  for (var i = 0; i < 230; i++) {
     var geometry = new THREE.SphereGeometry(Math.random() + 0.5, 12, 12);
     var material = new THREE.MeshBasicMaterial({
       color: getRandomColor()
     });
     var sphere = new THREE.Mesh(geometry, material);
-    sphere.position.x = getRandomInt(-100, 100);
-    sphere.position.y = getRandomInt(-100, 100);
-    sphere.position.z = getRandomInt(-100, 100);
+    sphere.position.x = getRandomInt(-60, 60);
+    sphere.position.y = getRandomInt(-60, 60);
+    sphere.position.z = getRandomInt(-60, 60);
     sphere.vx = 0.05;
     sphere.vy = 0.05;
     sphere.vz = 0.05;
@@ -335,7 +335,7 @@ function updateState() {
   var curdT = gem.uniforms.dT.value;
   var dTint = Math.round(curdT * 1000);
   dTint = dTint - 10;
-  if(dTint < 0){
+  if (dTint < 0) {
     dTint = 0;
   }
   //console.log(dTint);
@@ -390,5 +390,5 @@ function getRandomColor() {
 }
 
 function strip(number) {
-    return (parseFloat(number).toPrecision(6));
+  return (parseFloat(number).toPrecision(6));
 }
