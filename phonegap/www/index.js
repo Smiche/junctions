@@ -40,7 +40,7 @@ var audioController = new AudioController();
 initMusic(function () {
   stream = new Stream(musicArray[0], audioController)
 
-  var playUntilItDies = function() {
+  var playUntilItDies = function () {
     setTimeout(function () {
       currentTrack++;
       if (currentTrack >= musicArray.length) {
@@ -77,7 +77,7 @@ var G_UNIFORMS = {
 }
 
 function checkLoad(isMusic, areShaders) {
-  isMusicLoaded    = isMusicLoaded    || isMusic;
+  isMusicLoaded = isMusicLoaded || isMusic;
   areShadersLoaded = areShadersLoaded || areShaders;
 
   console.log(isMusicLoaded, areShadersLoaded);
@@ -162,6 +162,7 @@ function setSecondScene() {
   gem.removeFromScene();
   clearScene();
 
+  renderer.setClearColor(0x000);
   spheres = [];
   var curPos = {};
   for (var i = 0; i < 300; i++) {
@@ -185,7 +186,7 @@ function setSecondScene() {
   for (var i = 0; i < spheres.length; i++) {
     lineGeom.vertices.push(new THREE.Vector3(spheres[i].position.x, spheres[i].position.y, spheres[i].position.z));
   }
-  
+
   var lineMat = new THREE.LineBasicMaterial({
     color: 0xfff,
     transparent: true,
@@ -198,13 +199,8 @@ function setSecondScene() {
   animate();
 }
 
-function setFirstScene() {
-  curScene = "first";
-  clearScene();
-  gem.addToScene();
-}
-
 updateLines = function () {
+
   //lineGeom.vertices = [];
   for (var i = 0; i < spheres.length; i++) {
     lineGeom.vertices[i].x = spheres[i].position.x;
@@ -221,9 +217,16 @@ updateLines = function () {
   lineGeom.tangentsNeedUpdate = true;
 }
 
+
+function setFirstScene() {
+  curScene = "first";
+  clearScene();
+  gem.addToScene();
+}
+
 var nextScene = "first";
 function animate() {
-   console.log(gem.soul);
+  //console.log(gem.uniforms.dT.value);
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
@@ -244,7 +247,7 @@ function animate() {
 
   if (nextScene != curScene) {
     if (nextScene == "first")
-      ;
+      setFirstScene();
     else if (nextScene == "second") {
       setSecondScene();
     }
@@ -286,24 +289,24 @@ $(document).ready(function () {
   });
 
   $('#scbutton1').click(function () {
-    console.log("call scene one")
+    nextScene = "first";
   });
 
 
-    $('#scbutton2').click(function () {
-      console.log("call scene two")
-    });
+  $('#scbutton2').click(function () {
+    nextScene = "second";
+  });
 
 
-      $('#scbutton3').click(function () {
-        console.log("call scene three")
-      });
+  $('#scbutton3').click(function () {
+    console.log("call scene three")
+  });
 });
 
-  function toggleMenu(){
-    $("#menu").toggle(300);
+function toggleMenu() {
+  $("#menu").toggle(300);
 
-  }
+}
 function toCart(r, t, p) {
 
   var x = r * (Math.sin(t)) * (Math.cos(p));
@@ -328,6 +331,14 @@ function getRandomInt(min, max) {
 }
 
 function updateState() {
+  var curdT = gem.uniforms.dT.value;
+  var dTint = Math.round(curdT * 1000);
+  dTint = dTint - 12;
+  if(dTint < 0){
+    dTint = 0;
+  }
+  //console.log(dTint);
+
   //remove time interval, handle it on animate
   for (var i = 0; i < spheres.length; i++) {
     spheres[i].position.x = add(spheres[i].position.x, spheres[i].vx);
@@ -338,7 +349,8 @@ function updateState() {
     } else if (spheres[i].vx < 0) {
       spheres[i].vx = add(spheres[i].vx, gravity);
     } else if (spheres[i].vx == 0) {
-      spheres[i].vx = getRandomInt(-2, 2) / 10;
+      spheres[i].vx = getRandomInt(-1, 1) / 10 * dTint;
+      console.log(spheres[i].vx);
     }
 
     if (spheres[i].vy > 0) {
@@ -346,14 +358,16 @@ function updateState() {
     } else if (spheres[i].vy < 0) {
       spheres[i].vy = add(spheres[i].vy, gravity);
     } else if (spheres[i].vy == 0) {
-      spheres[i].vy = getRandomInt(-5, 5) / 10;
+      spheres[i].vy = getRandomInt(-5, 5) / 10 * dTint;
+      console.log(spheres[i].vy);
     }
     if (spheres[i].vz > 0) {
       spheres[i].vz = add(spheres[i].vz, negGravity);
     } else if (spheres[i].vz < 0) {
       spheres[i].vz = add(spheres[i].vz, gravity);
     } else if (spheres[i].vy == 0) {
-      spheres[i].vz = getRandomInt(-5, 5) / 10;
+      spheres[i].vz = getRandomInt(-5, 5) / 10 * dTint;
+      console.log(spheres[i].vz);
     }
   }
   updateLines();
