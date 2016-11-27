@@ -1,7 +1,7 @@
 //config
 WebVRConfig = {
   CARDBOARD_UI_DISABLED: false,
-  BUFFER_SCALE: 0.5,
+  BUFFER_SCALE: 0.6,
   FORCE_ENABLE_VR: true
 }
 
@@ -170,9 +170,9 @@ function setSecondScene() {
       color: getRandomColor()
     });
     var sphere = new THREE.Mesh(geometry, material);
-    sphere.position.x = getRandomInt(-200, 200);
-    sphere.position.y = getRandomInt(-200, 200);
-    sphere.position.z = getRandomInt(-200, 200);
+    sphere.position.x = getRandomInt(-100, 100);
+    sphere.position.y = getRandomInt(-100, 100);
+    sphere.position.z = getRandomInt(-100, 100);
     sphere.vx = 0.5;
     sphere.vy = 0.5;
     sphere.vz = 0.5;
@@ -181,10 +181,11 @@ function setSecondScene() {
   }
 
   lineGeom = new THREE.Geometry();
+
   for (var i = 0; i < spheres.length; i++) {
     lineGeom.vertices.push(new THREE.Vector3(spheres[i].position.x, spheres[i].position.y, spheres[i].position.z));
   }
-
+  
   var lineMat = new THREE.LineBasicMaterial({
     color: 0xfff,
     transparent: true,
@@ -194,19 +195,35 @@ function setSecondScene() {
   line = new THREE.Line(lineGeom, lineMat);
   scene.add(line);
 
-  vrDisplay.requestAnimationFrame(animate);
+  animate();
+}
+
+function setFirstScene() {
+  curScene = "first";
+  clearScene();
+  gem.addToScene();
 }
 
 updateLines = function () {
-  lineGeom.vertices = [];
+  //lineGeom.vertices = [];
   for (var i = 0; i < spheres.length; i++) {
-    lineGeom.vertices.push(new THREE.Vector3(spheres[i].position.x, spheres[i].position.y, spheres[i].position.z));
+    lineGeom.vertices[i].x = spheres[i].position.x;
+    lineGeom.vertices[i].y = spheres[i].position.y;
+    lineGeom.vertices[i].z = spheres[i].position.z;
   }
-  line.geometry.verticesNeedUpdate = true;
+
+  lineGeom.verticesNeedUpdate = true;
+  lineGeom.elementsNeedUpdate = true;
+  lineGeom.morphTargetsNeedUpdate = true;
+  lineGeom.uvsNeedUpdate = true;
+  lineGeom.normalsNeedUpdate = true;
+  lineGeom.colorsNeedUpdate = true;
+  lineGeom.tangentsNeedUpdate = true;
 }
 
 var nextScene = "first";
 function animate() {
+   console.log(G_UNIFORMS);
   audioController.update();
 
   G_UNIFORMS.dT.value = clock.getDelta();
@@ -225,15 +242,16 @@ function animate() {
   stats.update();
   controls.update();
 
-  effect.render(scene, camera);
   if (nextScene != curScene) {
     if (nextScene == "first")
       ;
     else if (nextScene == "second") {
       setSecondScene();
     }
-  } else
+  } else {
     vrDisplay.requestAnimationFrame(animate);
+    effect.render(scene, camera);
+  }
 }
 
 function onWindowResize() {
