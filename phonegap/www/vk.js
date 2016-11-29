@@ -40,8 +40,9 @@ function initMusic(successCallback) {
 				var rand = parseInt(Math.floor(Math.random() * audios.length));
 
 				_.each(audios, function(audioNode, j) {
-					var url = audioNode.audio.url;
-					if (songcounter <= 3) {
+
+					if (songcounter <= 3 && audioNode.audio.duration <= 360) {
+						var url = audioNode.audio.url;
 						songcounter++;
 						setTimeout(function () {
 							var request = new XMLHttpRequest();
@@ -64,7 +65,6 @@ function initMusic(successCallback) {
 
 						}, i * 20000);
 					}else{
-						return;
 					}
 				});
 			})

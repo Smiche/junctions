@@ -30,9 +30,7 @@ var loaded = 0;
 var neededToLoad = 1;
 
 var loader = new Loader();
-setTimeout(function () {
-  loader.liftCurtain();
-}, 3000);
+
 
 var clock = new THREE.Clock();
 var audioController = new AudioController();
@@ -88,6 +86,7 @@ function checkLoad(isMusic, areShaders) {
 }
 
 function init() {
+  loader.liftCurtain();
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 7000);
   camera.position.z = 0;
