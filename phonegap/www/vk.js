@@ -34,31 +34,39 @@ function initMusic(successCallback) {
 			})
 
 			attachments = _.filter(attachments, function(array) { return array.length > 0 })
-
+			var songcounter = 0;
 			console.log("Will load " + attachments.length + " tracks from Tiger Style group.");
 			_.each(attachments, function(audios, i) {
 				var rand = parseInt(Math.floor(Math.random() * audios.length));
-				var url = audios[rand].audio.url;
 
-				setTimeout(function() { 
-					var request = new XMLHttpRequest();
-					request.open('GET', url, true);
-					request.responseType = 'arraybuffer';
+				_.each(audios, function(audioNode, j) {
+					var url = audioNode.audio.url;
+					if (songcounter <= 3) {
+						songcounter++;
+						setTimeout(function () {
+							var request = new XMLHttpRequest();
+							request.open('GET', url, true);
+							request.responseType = 'arraybuffer';
 
-					// Decode asynchronously
-					request.onload = function() {
-						context.decodeAudioData(request.response, function(buffer) {
-						   	musicArray.push(buffer);
-						   	if (musicArray.length == 1) {
-						   		successCallback();
-						   	}
-						}, function () {
-							console.error("Decode from " + url + " failed");
-						});
-					};
+							// Decode asynchronously
+							request.onload = function () {
+								context.decodeAudioData(request.response, function (buffer) {
+									musicArray.push(buffer);
+									if (musicArray.length == 1) {
+										successCallback();
+									}
+								}, function () {
+									console.error("Decode from " + url + " failed");
+								});
+							};
 
-					request.send();
-				}, i * 20000);
+							request.send();
+
+						}, i * 20000);
+					}else{
+						return;
+					}
+				});
 			})
 		}
 	})

@@ -119,9 +119,9 @@ function init() {
   var g = new THREE.Mesh(new THREE.SphereGeometry(1200, 90, 90));
   gem = new CurlMesh('Space Puppy', g, {
     soul: {
-      noiseSize: { type: "f", value: .001, constraints: [.0001, .01] },
+      noiseSize: { type: "f", value: .008, constraints: [.0001, .01] },
       noiseVariation: { type: "f", value: .8, constraints: [.01, 1.] },
-      dampening: { type: "f", value: .85, constraints: [.8, .999] },
+      dampening: { type: "f", value: .9, constraints: [.8, .999] },
       noisePower: { type: "f", value: 60, constraints: [0, 200.] },
       returnPower: { type: "f", value: 1.2, constraints: [.0, 2.] },
       audioVelMultiplier: { type: "f", value: .7, constraints: [0, 1] },
