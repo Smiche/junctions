@@ -116,24 +116,40 @@ function init() {
   effect = new THREE.VREffect(renderer);
   window.addEventListener('resize', onWindowResize, false);
 
+  var COLOR_PROFILES = {
+      profile_1: {
+        color1: { type: "c", value: new THREE.Color(0xff0000) },
+        color2: { type: "c", value: new THREE.Color(0x00ffe1) },
+        color3: { type: "c", value: new THREE.Color(0x5500ff) }
+  },
+      profile_2:{
+        color1: { type: "c", value: new THREE.Color(0x039dd9) },
+        color2: { type: "c", value: new THREE.Color(0xfedf71) },
+        color3: { type: "c", value: new THREE.Color(0x028c65) }
+      }
+
+  }
+
+  var activeColorProfile = COLOR_PROFILES.profile_2;
+
   var g = new THREE.Mesh(new THREE.SphereGeometry(1200, 90, 90));
   gem = new CurlMesh('Space Puppy', g, {
     soul: {
       noiseSize: { type: "f", value: .008, constraints: [.0001, .01] },
-      noiseVariation: { type: "f", value: .8, constraints: [.01, 1.] },
+      noiseVariation: { type: "f", value: .4, constraints: [.01, 1.] },
       dampening: { type: "f", value: .9, constraints: [.8, .999] },
       noisePower: { type: "f", value: 60, constraints: [0, 200.] },
-      returnPower: { type: "f", value: 1.2, constraints: [.0, 2.] },
+      returnPower: { type: "f", value: 0.8, constraints: [.0, 2.] },
       audioVelMultiplier: { type: "f", value: .7, constraints: [0, 1] },
     },
     body: {
-      audioDisplacement: { type: "f", value: 30.0, constraints: [0, 100] },
+      audioDisplacement: { type: "f", value: 30.00, constraints: [0, 100] },
       tmp_color1: { type: "color", value: 0xff0000 },
       tmp_color2: { type: "color", value: 0x00ffe1 },
       tmp_color3: { type: "color", value: 0x5500ff },
-      color1: { type: "c", value: new THREE.Color(0xff0000) },
-      color2: { type: "c", value: new THREE.Color(0x00ffe1) },
-      color3: { type: "c", value: new THREE.Color(0x5500ff) },
+      color1: activeColorProfile.color1,
+      color2: activeColorProfile.color2,
+      color3: activeColorProfile.color3,
     }
   });
 
